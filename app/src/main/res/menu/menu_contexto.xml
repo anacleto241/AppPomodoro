@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <item
-        android:id="@+id/menu_compartilhar"
-        android:title="Compartilhar"/>
+        android:id="@+id/context_share"
+        android:title="Compartilhar" />
     <item
-        android:id="@+id/menu_excluir"
-        android:title="Excluir"/>
+        android:id="@+id/context_delete"
+        android:title="Excluir" />
 </menu>

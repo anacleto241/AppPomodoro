@@ -2,7 +2,7 @@ package br.edu.ifsuldeminas.mach.apppomodoro.activities;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
-
+import androidx.appcompat.widget.Toolbar;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -29,6 +29,11 @@ public class TelaPrincipalActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_tela_principal);
 
+        Toolbar toolbar = findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+        if (getSupportActionBar() != null) {
+            getSupportActionBar().setTitle("Estude por Blocos"); // Set your title here
+        }
         // Inicialização dos componentes
         textViewCiclosConcluidos = findViewById(R.id.textViewCiclosConcluidos);
         buttonIniciarCiclo = findViewById(R.id.buttonIniciarCiclo);
@@ -55,6 +60,33 @@ public class TelaPrincipalActivity extends AppCompatActivity {
         });
     }
 
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_appbar, menu); // Inflate your appbar menu
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+
+        if (id == R.id.action_about) {
+            Toast.makeText(this, "Menu 'Sobre' clicado", Toast.LENGTH_SHORT).show();
+            // Start a new AboutActivity or show a dialog
+            // startActivity(new Intent(this, AboutActivity.class));
+            return true;
+        } else if (id == R.id.action_clear_history) {
+            Toast.makeText(this, "Menu 'Limpar Histórico' clicado", Toast.LENGTH_SHORT).show();
+            // Implement history clearing logic, possibly interacting with DatabaseHelper
+            return true;
+        } else if (id == R.id.action_change_theme) {
+            Toast.makeText(this, "Menu 'Mudar Tema' clicado", Toast.LENGTH_SHORT).show();
+            // Implement theme changing logic (requires more setup)
+            return true;
+        }
+
+        return super.onOptionsItemSelected(item);
+    }
     private void atualizarContagemCiclos() {
         int ciclosConcluidos = dbHelper.getTotalCiclos();
         textViewCiclosConcluidos.setText(getString(R.string.ciclos_concluidos, ciclosConcluidos));

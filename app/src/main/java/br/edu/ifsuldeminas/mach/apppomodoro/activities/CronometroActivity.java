@@ -23,20 +23,42 @@ public class CronometroActivity extends AppCompatActivity {
     private TextView textViewTempo;
     private Button buttonPausar;
     private CountDownTimer countDownTimer;
+    private long timeLeftInMillis;
     private long tempoRestante = 1 * 60 * 1000; // 25 minutos em ms
     private boolean timerRodando = false;
     private DatabaseHelper dbHelper;
+    private Button btnStartPause;
+    private long initialTimeMillis = 25 * 60 * 1000; // 25 minutes for example
+    private boolean timerRunning;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_cronometro);
-
+        Toolbar toolbar = findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+        if (getSupportActionBar() != null) {
+            getSupportActionBar().setTitle("Cronômetro");
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);// Set your title here
+        }
         // Inicialização dos componentes
         initViews();
         setupDatabase();
         startTimer();
+        textViewTempo = findViewById(R.id.textViewTempo); // Assuming you have these in activity_cronometro.xml
+        buttonPausar = findViewById(R.id.buttonPausar);
+        btnStartPause = findViewById(R.id.buttonPausar);
 
+        timeLeftInMillis = tempoRestante;
+        updateTimerDisplay();
+
+        btnStartPause.setOnClickListener(v -> {
+            if (timerRunning) {
+                pauseTimer();
+            } else {
+                startTimer();
+            }
+        });
         // Configuração do listener do botão
         buttonPausar.setOnClickListener(v -> toggleTimerState());
     }

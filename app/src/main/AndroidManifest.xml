@@ -3,6 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="br.edu.ifsuldeminas.mach.apppomodoro">
 
+    <uses-permission android:name="android.permission.SCHEDULE_EXACT_ALARM" />
     <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
 
     <application
@@ -27,6 +28,10 @@
             </intent-filter>
         </activity>
 
+        <receiver
+            android:name=".utils.AlarmReceiver"
+            android:enabled="true"
+            android:exported="false" />
         <!-- Principal Activity -->
         <activity
             android:name=".activities.TelaPrincipalActivity"

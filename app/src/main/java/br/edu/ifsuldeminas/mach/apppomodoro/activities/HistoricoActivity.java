@@ -2,10 +2,14 @@ package br.edu.ifsuldeminas.mach.apppomodoro.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -27,7 +31,11 @@ public class HistoricoActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_historico);
-
+        Toolbar toolbar = findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+        if (getSupportActionBar() != null) {
+            getSupportActionBar().setTitle("Histórico"); // Set your title here
+        }
         recyclerView = findViewById(R.id.recyclerView);
 
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
@@ -36,7 +44,6 @@ public class HistoricoActivity extends AppCompatActivity {
         carregarDados();
 
     }
-
     private void carregarDados() {
         List<Ciclo> ciclos = dbHelper.getAllCiclos();
         cicloAdapter = new CicloAdapter(ciclos, new CicloAdapter.CicloClickListener() {

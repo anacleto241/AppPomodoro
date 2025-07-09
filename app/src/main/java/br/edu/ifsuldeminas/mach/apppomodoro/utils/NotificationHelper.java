@@ -14,7 +14,9 @@ import br.edu.ifsuldeminas.mach.apppomodoro.R;
 
 public class NotificationHelper {
     private static final String CHANNEL_ID = "pomodoro_channel";
-
+    private NotificationManager notificationManager;
+    private Context context;
+    private static final int NOTIFICATION_ID = 123;
     public static void notificar(Context context, String titulo, String mensagem) {
         createNotificationChannel(context);
 
@@ -43,6 +45,25 @@ public class NotificationHelper {
             channel.setDescription(description);
             NotificationManager manager = context.getSystemService(NotificationManager.class);
             manager.createNotificationChannel(channel);
+        }
+    }
+    public void sendNotification(String title, String message) {
+        NotificationCompat.Builder builder = new NotificationCompat.Builder(context, CHANNEL_ID)
+                .setSmallIcon(R.mipmap.ic_launcher) // Use your app's launcher icon or a specific notification icon
+                .setContentTitle(title)
+                .setContentText(message)
+                .setPriority(NotificationCompat.PRIORITY_HIGH) // Set high priority for heads-up notification
+                .setAutoCancel(true); // Dismisses the notification when the user taps it
+
+        if (notificationManager != null) {
+            notificationManager.notify(NOTIFICATION_ID, builder.build());
+        }
+    }
+
+    // You might also want a method to cancel notifications
+    public void cancelNotification() {
+        if (notificationManager != null) {
+            notificationManager.cancel(NOTIFICATION_ID);
         }
     }
 }
