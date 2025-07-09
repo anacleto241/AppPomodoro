@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+        <!-- Primary Colors -->
+        <color name="colorPrimary">#FF5252</color>  <!-- Red 500 -->
+        <color name="colorPrimaryDark">#D32F2F</color>  <!-- Red 700 -->
+        <color name="colorPrimaryLight">#FF867F</color>  <!-- Red 300 -->
+        <color name="colorAccent">#FF4081</color>  <!-- Pink A200 -->
+
+        <!-- Status/Navigation Bar Colors -->
+        <color name="statusBarColor">@color/colorPrimaryDark</color>
+        <color name="navigationBarColor">@color/black</color>
+
+        <!-- Background Colors -->
+        <color name="background">#FFFFFF</color>
+        <color name="backgroundDark">#F5F5F5</color>
+        <color name="backgroundLight">#FAFAFA</color>
+
+        <!-- Text Colors -->
+        <color name="textPrimary">#212121</color>  <!-- Grey 900 -->
+        <color name="textSecondary">#757575</color>  <!-- Grey 600 -->
+        <color name="textHint">#BDBDBD</color>  <!-- Grey 400 -->
+        <color name="textOnPrimary">#FFFFFF</color>  <!-- White -->
+        <color name="textOnDark">#FFFFFF</color>
+
+        <!-- Button Colors -->
+        <color name="buttonNormal">@color/colorPrimary</color>
+        <color name="buttonPressed">@color/colorPrimaryDark</color>
+        <color name="buttonDisabled">#E0E0E0</color>  <!-- Grey 300 -->
+        <color name="buttonText">@color/textOnPrimary</color>
+
+        <!-- Timer Colors -->
+        <color name="timerActive">#4CAF50</color>  <!-- Green 500 -->
+        <color name="timerPaused">#FFC107</color>  <!-- Amber 500 -->
+        <color name="timerFinished">#F44336</color>  <!-- Red 500 -->
+
+        <!-- Divider/Line Colors -->
+        <color name="divider">#E0E0E0</color>  <!-- Grey 300 -->
+
+        <!-- Card Colors -->
+        <color name="cardBackground">#FFFFFF</color>
+        <color name="cardShadow">#1E000000</color>
+
+        <!-- Standard Colors -->
+        <color name="white">#FFFFFF</color>
+        <color name="black">#000000</color>
+        <color name="transparent">#00000000</color>
+
+        <!-- Notification Colors -->
+        <color name="notificationBackground">@color/colorPrimary</color>
+        <color name="notificationText">@color/white</color>
+
+        <!-- Dark Theme Colors -->
+        <color name="darkColorPrimary">#D32F2F</color>
+        <color name="darkColorPrimaryDark">#B71C1C</color>
+        <color name="darkBackground">#121212</color>
+        <color name="darkSurface">#1E1E1E</color>
+        <color name="darkTextPrimary">#E0E0E0</color>
+        <color name="darkTextSecondary">#9E9E9E</color>
+</resources>

@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:padding="16dp"
+    android:background="?attr/selectableItemBackground">
+
+    <TextView
+        android:id="@+id/textViewDescricao"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Pomodoro concluído"
+        android:textSize="16sp"/>
+
+    <TextView
+        android:id="@+id/textViewDuracao"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="25 minutos"
+        android:textColor="@android:color/darker_gray"/>
+
+    <TextView
+        android:id="@+id/textViewData"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="10/05/2024 15:30"
+        android:textColor="@android:color/darker_gray"/>
+
+</LinearLayout>

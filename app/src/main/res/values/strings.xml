@@ -1,0 +1,9 @@
+<resources>
+    <string name="app_name">App Pomodoro</string>
+    <string name="notification_channel_id">pomodoro_channel</string>
+    <string name="notification_channel_name">Pomodoro Notifications</string>
+    <string name="notification_channel_description">Notifications for Pomodoro timer completion</string>
+    <string name="ciclos_concluidos">Ciclos concluídos: %d</string>
+    <string name="app_version">App Pomodoro Educacional v1.0</string>
+    <string name="historico_lista_descricao">Lista de ciclos Pomodoro concluídos</string>
+</resources>
