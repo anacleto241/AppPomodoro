@@ -4,6 +4,9 @@ import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.content.Context;
 import android.content.pm.PackageManager;
+import android.media.AudioAttributes;
+import android.media.RingtoneManager;
+import android.net.Uri;
 import android.os.Build;
 
 import androidx.core.app.ActivityCompat;
@@ -21,15 +24,18 @@ public class NotificationHelper {
         createNotificationChannel(context);
 
         NotificationCompat.Builder builder = new NotificationCompat.Builder(context, CHANNEL_ID)
-                .setSmallIcon(R.drawable.ic_alarm)
+                .setSmallIcon(R.drawable.ic_alarm) // ou outro ícone
                 .setContentTitle(titulo)
                 .setContentText(mensagem)
-                .setPriority(NotificationCompat.PRIORITY_DEFAULT);
+                .setPriority(NotificationCompat.PRIORITY_HIGH) // importante: prioridade alta
+                .setAutoCancel(true)
+                .setDefaults(NotificationCompat.DEFAULT_ALL); // ativa som, vibração e luz
 
         NotificationManagerCompat notificationManager = NotificationManagerCompat.from(context);
+
         if (ActivityCompat.checkSelfPermission(context, android.Manifest.permission.POST_NOTIFICATIONS)
-                == PackageManager.PERMISSION_GRANTED) {
-            notificationManager.notify(1, builder.build());
+                == PackageManager.PERMISSION_GRANTED || Build.VERSION.SDK_INT < Build.VERSION_CODES.TIRAMISU) {
+            notificationManager.notify(NOTIFICATION_ID, builder.build());
         }
     }
 
@@ -37,33 +43,26 @@ public class NotificationHelper {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             CharSequence name = context.getString(R.string.notification_channel_name);
             String description = context.getString(R.string.notification_channel_description);
+
+            Uri sound = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
+
+            AudioAttributes audioAttributes = new AudioAttributes.Builder()
+                    .setContentType(AudioAttributes.CONTENT_TYPE_SONIFICATION)
+                    .setUsage(AudioAttributes.USAGE_NOTIFICATION)
+                    .build();
+
             NotificationChannel channel = new NotificationChannel(
                     CHANNEL_ID,
                     name,
-                    NotificationManager.IMPORTANCE_DEFAULT
+                    NotificationManager.IMPORTANCE_HIGH // IMPORTANTE: prioridade alta
             );
             channel.setDescription(description);
+            channel.enableVibration(true);
+            channel.enableLights(true);
+            channel.setSound(sound, audioAttributes);
+
             NotificationManager manager = context.getSystemService(NotificationManager.class);
             manager.createNotificationChannel(channel);
-        }
-    }
-    public void sendNotification(String title, String message) {
-        NotificationCompat.Builder builder = new NotificationCompat.Builder(context, CHANNEL_ID)
-                .setSmallIcon(R.mipmap.ic_launcher) // Use your app's launcher icon or a specific notification icon
-                .setContentTitle(title)
-                .setContentText(message)
-                .setPriority(NotificationCompat.PRIORITY_HIGH) // Set high priority for heads-up notification
-                .setAutoCancel(true); // Dismisses the notification when the user taps it
-
-        if (notificationManager != null) {
-            notificationManager.notify(NOTIFICATION_ID, builder.build());
-        }
-    }
-
-    // You might also want a method to cancel notifications
-    public void cancelNotification() {
-        if (notificationManager != null) {
-            notificationManager.cancel(NOTIFICATION_ID);
         }
     }
 }

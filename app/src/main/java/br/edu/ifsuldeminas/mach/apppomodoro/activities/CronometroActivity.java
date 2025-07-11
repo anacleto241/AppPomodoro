@@ -1,6 +1,11 @@
 package br.edu.ifsuldeminas.mach.apppomodoro.activities;
 
+import android.annotation.SuppressLint;
+import android.app.AlarmManager;
+import android.app.PendingIntent;
+import android.content.Intent;
 import android.graphics.Color;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.util.Log;
@@ -15,6 +20,7 @@ import androidx.appcompat.widget.Toolbar;
 import java.util.Locale;
 
 import br.edu.ifsuldeminas.mach.apppomodoro.R;
+import br.edu.ifsuldeminas.mach.apppomodoro.utils.AlarmReceiver;
 import br.edu.ifsuldeminas.mach.apppomodoro.utils.DatabaseHelper;
 import br.edu.ifsuldeminas.mach.apppomodoro.utils.NotificationHelper;
 
@@ -41,6 +47,15 @@ public class CronometroActivity extends AppCompatActivity {
             getSupportActionBar().setTitle("Cronômetro");
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);// Set your title here
         }
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+            AlarmManager alarmManager = (AlarmManager) getSystemService(ALARM_SERVICE);
+            if (!alarmManager.canScheduleExactAlarms()) {
+                Intent intent = new Intent(android.provider.Settings.ACTION_REQUEST_SCHEDULE_EXACT_ALARM);
+                startActivity(intent);  // Abre a tela de permissões
+            }
+        }
+
         // Inicialização dos componentes
         initViews();
         setupDatabase();
@@ -53,10 +68,16 @@ public class CronometroActivity extends AppCompatActivity {
         updateTimerDisplay();
 
         btnStartPause.setOnClickListener(v -> {
-            if (timerRunning) {
-                pauseTimer();
-            } else {
-                startTimer();
+            Log.d(TAG, "Botão iniciar/pausar clicado.");
+            try {
+                if (timerRunning) {
+                    pauseTimer();
+                } else {
+                    startTimer();
+                }
+            } catch (Exception e) {
+                Log.e(TAG, "Erro ao clicar no botão iniciar/pausar: ", e);
+                Toast.makeText(this, "Erro ao iniciar/pausar o cronômetro", Toast.LENGTH_LONG).show();
             }
         });
         // Configuração do listener do botão
@@ -81,29 +102,61 @@ public class CronometroActivity extends AppCompatActivity {
         dbHelper = new DatabaseHelper(this);
     }
 
+    @SuppressLint("ScheduleExactAlarm")
     private void startTimer() {
         if (countDownTimer != null) {
             countDownTimer.cancel();
         }
 
-        countDownTimer = new CountDownTimer(tempoRestante, 100) {
-            @Override
-            public void onTick(long millisUntilFinished) {
-                tempoRestante = millisUntilFinished;
-                updateTimerDisplay();
+        try {
+            // === Agendar notificação com AlarmManager ===
+            Intent intent = new Intent(this, AlarmReceiver.class);
+            intent.putExtra("message", "Pomodoro finalizado! Hora de descansar.");
+
+            int flags = PendingIntent.FLAG_UPDATE_CURRENT;
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                flags |= PendingIntent.FLAG_IMMUTABLE;
             }
 
-            @Override
-            public void onFinish() {
-                completeTimer();
-            }
-        }.start();
+            PendingIntent pendingIntent = PendingIntent.getBroadcast(
+                    this, 1, intent, flags
+            );
 
-        timerRodando = true;
-        buttonPausar.setText("Pausar");
-        showToast("Cronômetro iniciado!");
-        Log.d(TAG, "Cronômetro iniciado");
+            AlarmManager alarmManager = (AlarmManager) getSystemService(ALARM_SERVICE);
+            long triggerAtMillis = System.currentTimeMillis() + tempoRestante;
+            if (alarmManager != null) {
+                alarmManager.setExactAndAllowWhileIdle(
+                        AlarmManager.RTC_WAKEUP,
+                        triggerAtMillis,
+                        pendingIntent
+                );
+            }
+
+            // === Iniciar cronômetro ===
+            countDownTimer = new CountDownTimer(tempoRestante, 100) {
+                @Override
+                public void onTick(long millisUntilFinished) {
+                    tempoRestante = millisUntilFinished;
+                    updateTimerDisplay();
+                }
+
+                @Override
+                public void onFinish() {
+                    completeTimer();
+                }
+            }.start();
+
+            timerRodando = true;
+            buttonPausar.setText("Pausar");
+            showToast("Cronômetro iniciado!");
+            Log.d(TAG, "Cronômetro iniciado");
+
+        } catch (Exception e) {
+            Log.e(TAG, "Erro ao iniciar o cronômetro: ", e);
+            Toast.makeText(this, "Erro ao iniciar o cronômetro", Toast.LENGTH_LONG).show();
+        }
     }
+
 
     private void updateTimerDisplay() {
         runOnUiThread(() -> {
@@ -135,6 +188,16 @@ public class CronometroActivity extends AppCompatActivity {
     }
 
     private void pauseTimer() {
+        Intent intent = new Intent(this, AlarmReceiver.class);
+        PendingIntent pendingIntent = PendingIntent.getBroadcast(
+                this,
+                1,
+                intent,
+                PendingIntent.FLAG_UPDATE_CURRENT | PendingIntent.FLAG_IMMUTABLE
+        );
+        AlarmManager alarmManager = (AlarmManager) getSystemService(ALARM_SERVICE);
+        alarmManager.cancel(pendingIntent);
+
         if (countDownTimer != null) {
             countDownTimer.cancel();
         }

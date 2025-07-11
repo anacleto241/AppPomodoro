@@ -6,6 +6,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.PopupMenu;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -54,7 +55,18 @@ public class HistoricoActivity extends AppCompatActivity {
 
             @Override
             public void onCicloLongClick(Ciclo ciclo, int position) {
-                excluirCiclo(position, ciclo);
+                PopupMenu popup = new PopupMenu(HistoricoActivity.this, recyclerView.findViewHolderForAdapterPosition(position).itemView);
+                popup.getMenu().add("Compartilhar");
+                popup.getMenu().add("Excluir");
+                popup.setOnMenuItemClickListener(item -> {
+                    if (item.getTitle().equals("Compartilhar")) {
+                        compartilharCiclo(ciclo);
+                    } else if (item.getTitle().equals("Excluir")) {
+                        excluirCiclo(position, ciclo);
+                    }
+                    return true;
+                });
+                popup.show();
             }
         });
         recyclerView.setAdapter(cicloAdapter);

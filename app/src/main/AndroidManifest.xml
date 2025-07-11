@@ -28,10 +28,7 @@
             </intent-filter>
         </activity>
 
-        <receiver
-            android:name=".utils.AlarmReceiver"
-            android:enabled="true"
-            android:exported="false" />
+        <receiver android:name=".utils.AlarmReceiver" android:exported="true" />
         <!-- Principal Activity -->
         <activity
             android:name=".activities.TelaPrincipalActivity"
