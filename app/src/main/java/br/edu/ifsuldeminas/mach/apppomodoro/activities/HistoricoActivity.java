@@ -35,7 +35,7 @@ public class HistoricoActivity extends AppCompatActivity {
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         if (getSupportActionBar() != null) {
-            getSupportActionBar().setTitle("Histórico"); // Set your title here
+            getSupportActionBar().setTitle("Histórico");
         }
         recyclerView = findViewById(R.id.recyclerView);
 

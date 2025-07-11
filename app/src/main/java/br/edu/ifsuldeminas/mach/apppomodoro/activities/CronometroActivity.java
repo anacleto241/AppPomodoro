@@ -30,11 +30,11 @@ public class CronometroActivity extends AppCompatActivity {
     private Button buttonPausar;
     private CountDownTimer countDownTimer;
     private long timeLeftInMillis;
-    private long tempoRestante = 1 * 60 * 1000; // 25 minutos em ms
+    private long tempoRestante = 1 * 60 * 1000;
     private boolean timerRodando = false;
     private DatabaseHelper dbHelper;
     private Button btnStartPause;
-    private long initialTimeMillis = 25 * 60 * 1000; // 25 minutes for example
+    private long initialTimeMillis = 25 * 60 * 1000;
     private boolean timerRunning;
 
     @Override
@@ -45,22 +45,22 @@ public class CronometroActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
         if (getSupportActionBar() != null) {
             getSupportActionBar().setTitle("Cronômetro");
-            getSupportActionBar().setDisplayHomeAsUpEnabled(true);// Set your title here
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         }
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
             AlarmManager alarmManager = (AlarmManager) getSystemService(ALARM_SERVICE);
             if (!alarmManager.canScheduleExactAlarms()) {
                 Intent intent = new Intent(android.provider.Settings.ACTION_REQUEST_SCHEDULE_EXACT_ALARM);
-                startActivity(intent);  // Abre a tela de permissões
+                startActivity(intent);
             }
         }
 
-        // Inicialização dos componentes
+
         initViews();
         setupDatabase();
         startTimer();
-        textViewTempo = findViewById(R.id.textViewTempo); // Assuming you have these in activity_cronometro.xml
+        textViewTempo = findViewById(R.id.textViewTempo);
         buttonPausar = findViewById(R.id.buttonPausar);
         btnStartPause = findViewById(R.id.buttonPausar);
 
@@ -80,7 +80,7 @@ public class CronometroActivity extends AppCompatActivity {
                 Toast.makeText(this, "Erro ao iniciar/pausar o cronômetro", Toast.LENGTH_LONG).show();
             }
         });
-        // Configuração do listener do botão
+
         buttonPausar.setOnClickListener(v -> toggleTimerState());
     }
 
@@ -88,7 +88,7 @@ public class CronometroActivity extends AppCompatActivity {
         textViewTempo = findViewById(R.id.textViewTempo);
         buttonPausar = findViewById(R.id.buttonPausar);
 
-        // Verificação de visibilidade do TextView
+
         textViewTempo.post(() -> {
             if (textViewTempo.getWidth() == 0 || textViewTempo.getHeight() == 0) {
                 Log.e(TAG, "TextView não está visível ou tem dimensões zero");
@@ -109,7 +109,7 @@ public class CronometroActivity extends AppCompatActivity {
         }
 
         try {
-            // === Agendar notificação com AlarmManager ===
+
             Intent intent = new Intent(this, AlarmReceiver.class);
             intent.putExtra("message", "Pomodoro finalizado! Hora de descansar.");
 
@@ -131,8 +131,6 @@ public class CronometroActivity extends AppCompatActivity {
                         pendingIntent
                 );
             }
-
-            // === Iniciar cronômetro ===
             countDownTimer = new CountDownTimer(tempoRestante, 100) {
                 @Override
                 public void onTick(long millisUntilFinished) {

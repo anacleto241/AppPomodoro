@@ -45,7 +45,7 @@ public class CicloAdapter extends RecyclerView.Adapter<CicloAdapter.CicloViewHol
         holder.textViewDuracao.setText(ciclo.getDuracao() + " minutos");
         holder.textViewData.setText(ciclo.getData());
 
-        // Configura os listeners
+
         holder.itemView.setOnClickListener(v -> {
             if (listener != null) {
                 listener.onCicloClick(ciclo);
@@ -60,7 +60,7 @@ public class CicloAdapter extends RecyclerView.Adapter<CicloAdapter.CicloViewHol
             return false;
         });
 
-        // Acessibilidade
+
         holder.itemView.setContentDescription(
                 "Ciclo: " + ciclo.getDescricao() + ", " +
                         ciclo.getDuracao() + " minutos em " + ciclo.getData()

@@ -1,5 +1,5 @@
 // br.edu.ifsuldeminas.mach.apppomodoro.AlarmReceiver.java
-package br.edu.ifsuldeminas.mach.apppomodoro.utils; // This package matches your root
+package br.edu.ifsuldeminas.mach.apppomodoro.utils;
 
 import android.content.BroadcastReceiver;
 import android.content.Context;

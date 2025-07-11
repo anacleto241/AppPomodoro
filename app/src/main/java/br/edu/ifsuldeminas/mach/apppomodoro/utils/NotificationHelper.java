@@ -24,12 +24,12 @@ public class NotificationHelper {
         createNotificationChannel(context);
 
         NotificationCompat.Builder builder = new NotificationCompat.Builder(context, CHANNEL_ID)
-                .setSmallIcon(R.drawable.ic_alarm) // ou outro ícone
+                .setSmallIcon(R.drawable.ic_alarm)
                 .setContentTitle(titulo)
                 .setContentText(mensagem)
-                .setPriority(NotificationCompat.PRIORITY_HIGH) // importante: prioridade alta
+                .setPriority(NotificationCompat.PRIORITY_HIGH)
                 .setAutoCancel(true)
-                .setDefaults(NotificationCompat.DEFAULT_ALL); // ativa som, vibração e luz
+                .setDefaults(NotificationCompat.DEFAULT_ALL);
 
         NotificationManagerCompat notificationManager = NotificationManagerCompat.from(context);
 
@@ -54,7 +54,7 @@ public class NotificationHelper {
             NotificationChannel channel = new NotificationChannel(
                     CHANNEL_ID,
                     name,
-                    NotificationManager.IMPORTANCE_HIGH // IMPORTANTE: prioridade alta
+                    NotificationManager.IMPORTANCE_HIGH
             );
             channel.setDescription(description);
             channel.enableVibration(true);

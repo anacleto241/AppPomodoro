@@ -32,23 +32,22 @@ public class TelaPrincipalActivity extends AppCompatActivity {
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         if (getSupportActionBar() != null) {
-            getSupportActionBar().setTitle("Estude por Blocos"); // Set your title here
+            getSupportActionBar().setTitle("Estude por Blocos");
         }
-        // Inicialização dos componentes
+
         textViewCiclosConcluidos = findViewById(R.id.textViewCiclosConcluidos);
         buttonIniciarCiclo = findViewById(R.id.buttonIniciarCiclo);
         buttonVerHistorico = findViewById(R.id.buttonVerHistorico);
 
-        // Configuração do SharedPreferences
+
         sharedPreferences = getSharedPreferences("PomodoroPrefs", Context.MODE_PRIVATE);
 
-        // Inicialização do banco de dados
+
         dbHelper = new DatabaseHelper(this);
 
-        // Atualizar contagem de ciclos
         atualizarContagemCiclos();
 
-        // Listeners dos botões
+
         buttonIniciarCiclo.setOnClickListener(v -> {
             startActivity(new Intent(this, CronometroActivity.class));
             overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
@@ -62,7 +61,7 @@ public class TelaPrincipalActivity extends AppCompatActivity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.menu_appbar, menu); // Inflate your appbar menu
+        getMenuInflater().inflate(R.menu.menu_appbar, menu);
         return true;
     }
 
@@ -72,16 +71,15 @@ public class TelaPrincipalActivity extends AppCompatActivity {
 
         if (id == R.id.action_about) {
             Toast.makeText(this, "Menu 'Sobre' clicado", Toast.LENGTH_SHORT).show();
-            // Start a new AboutActivity or show a dialog
-            // startActivity(new Intent(this, AboutActivity.class));
+
             return true;
         } else if (id == R.id.action_clear_history) {
             Toast.makeText(this, "Menu 'Limpar Histórico' clicado", Toast.LENGTH_SHORT).show();
-            // Implement history clearing logic, possibly interacting with DatabaseHelper
+
             return true;
         } else if (id == R.id.action_change_theme) {
             Toast.makeText(this, "Menu 'Mudar Tema' clicado", Toast.LENGTH_SHORT).show();
-            // Implement theme changing logic (requires more setup)
+
             return true;
         }
 
