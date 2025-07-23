@@ -1,2 +1,61 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources></resources>
+<resources>
+    <!-- Light theme specific styles -->
+    
+    <!-- Material Button Styles for Light Theme -->
+    <style name="Widget.App.Button.Primary" parent="Widget.Material3.Button">
+        <item name="backgroundTint">@color/colorPrimary</item>
+        <item name="android:textColor">@color/textOnPrimary</item>
+    </style>
+    
+    <style name="Widget.App.Button.Secondary" parent="Widget.Material3.Button.TextButton">
+        <item name="android:textColor">@color/colorPrimary</item>
+        <item name="strokeColor">@color/colorPrimary</item>
+    </style>
+    
+    <!-- Card Styles for Light Theme -->
+    <style name="Widget.App.CardView" parent="Widget.Material3.CardView.Elevated">
+        <item name="cardBackgroundColor">@color/cardBackground</item>
+        <item name="android:elevation">4dp</item>
+        <item name="cardCornerRadius">12dp</item>
+    </style>
+    
+    <!-- Toolbar Styles for Light Theme -->
+    <style name="Widget.App.Toolbar" parent="Widget.Material3.Toolbar">
+        <item name="android:background">@color/colorPrimary</item>
+        <item name="titleTextColor">@color/textOnPrimary</item>
+        <item name="navigationIconTint">@color/textOnPrimary</item>
+    </style>
+    
+    <!-- Text Styles -->
+    <style name="TextAppearance.App.Headline1" parent="TextAppearance.Material3.HeadlineLarge">
+        <item name="android:textColor">@color/textPrimary</item>
+        <item name="android:textSize">32sp</item>
+        <item name="android:fontFamily">sans-serif-medium</item>
+    </style>
+    
+    <style name="TextAppearance.App.Body1" parent="TextAppearance.Material3.BodyLarge">
+        <item name="android:textColor">@color/textPrimary</item>
+        <item name="android:textSize">16sp</item>
+    </style>
+    
+    <style name="TextAppearance.App.Body2" parent="TextAppearance.Material3.BodyMedium">
+        <item name="android:textColor">@color/textSecondary</item>
+        <item name="android:textSize">14sp</item>
+    </style>
+    
+    <!-- Timer Display Style -->
+    <style name="TextAppearance.App.TimerDisplay" parent="TextAppearance.Material3.DisplayLarge">
+        <item name="android:textColor">@color/focus_text_color</item>
+        <item name="android:textSize">120sp</item>
+        <item name="android:fontFamily">monospace</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+    
+    <!-- Input Field Styles -->
+    <style name="Widget.App.TextInputLayout" parent="Widget.Material3.TextInputLayout.OutlinedBox">
+        <item name="boxStrokeColor">@color/colorPrimary</item>
+        <item name="hintTextColor">@color/colorPrimary</item>
+        <item name="android:textColorHint">@color/textHint</item>
+    </style>
+</resources>

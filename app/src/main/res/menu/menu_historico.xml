@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item
+        android:id="@+id/action_search"
+        android:icon="@android:drawable/ic_menu_search"
+        android:title="Buscar"
+        app:showAsAction="ifRoom|collapseActionView"
+        app:actionViewClass="androidx.appcompat.widget.SearchView" />
+
+    <item
+        android:id="@+id/action_filter_date"
+        android:icon="@android:drawable/ic_menu_my_calendar"
+        android:title="Filtrar por data"
+        app:showAsAction="never" />
+
+    <item
+        android:id="@+id/action_filter_duration"
+        android:icon="@android:drawable/ic_menu_recent_history"
+        android:title="Filtrar por duração"
+        app:showAsAction="never" />
+
+    <item
+        android:id="@+id/action_clear_filters"
+        android:icon="@android:drawable/ic_menu_revert"
+        android:title="Limpar filtros"
+        app:showAsAction="never" />
+
+</menu>

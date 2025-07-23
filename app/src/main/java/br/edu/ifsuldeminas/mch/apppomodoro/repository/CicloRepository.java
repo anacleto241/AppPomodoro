@@ -15,6 +15,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import br.edu.ifsuldeminas.mch.apppomodoro.models.Ciclo;
+import br.edu.ifsuldeminas.mch.apppomodoro.models.DisciplinaStat;
 
 public class CicloRepository {
     private static final String TAG = "CicloRepository";
@@ -124,8 +125,74 @@ public class CicloRepository {
         return minutosLiveData;
     }
     
+    public void getEstatisticasPorDisciplina(String usuarioId, OnEstatisticasListener listener) {
+        firestore.collection("ciclos")
+                .whereEqualTo("usuarioId", usuarioId)
+                .get()
+                .addOnSuccessListener(ciclosSnapshot -> {
+                    // Buscar todas as disciplinas
+                    firestore.collection("disciplinas")
+                            .whereEqualTo("usuarioId", usuarioId)
+                            .get()
+                            .addOnSuccessListener(disciplinasSnapshot -> {
+                                Map<String, DisciplinaStat> statsMap = new HashMap<>();
+                                
+                                // Inicializar estatísticas para cada disciplina
+                                for (QueryDocumentSnapshot disciplinaDoc : disciplinasSnapshot) {
+                                    String disciplinaId = disciplinaDoc.getId();
+                                    String nome = disciplinaDoc.getString("nome");
+                                    String cor = disciplinaDoc.getString("cor");
+                                    
+                                    DisciplinaStat stat = new DisciplinaStat();
+                                    stat.setDisciplinaId(disciplinaId);
+                                    stat.setNome(nome != null ? nome : "Disciplina");
+                                    stat.setCor(cor != null ? cor : "#FF6B35");
+                                    stat.setTotalCiclos(0);
+                                    stat.setTotalTempo(0);
+                                    
+                                    statsMap.put(disciplinaId, stat);
+                                }
+                                
+                                // Calcular estatísticas com base nos ciclos
+                                for (QueryDocumentSnapshot cicloDoc : ciclosSnapshot) {
+                                    String disciplinaId = cicloDoc.getString("disciplinaId");
+                                    Long duracao = cicloDoc.getLong("duracao");
+                                    
+                                    if (disciplinaId != null && duracao != null && statsMap.containsKey(disciplinaId)) {
+                                        DisciplinaStat stat = statsMap.get(disciplinaId);
+                                        stat.setTotalCiclos(stat.getTotalCiclos() + 1);
+                                        stat.setTotalTempo(stat.getTotalTempo() + duracao);
+                                    }
+                                }
+                                
+                                // Filtrar apenas disciplinas com pelo menos 1 ciclo
+                                List<DisciplinaStat> estatisticas = new ArrayList<>();
+                                for (DisciplinaStat stat : statsMap.values()) {
+                                    if (stat.getTotalCiclos() > 0) {
+                                        estatisticas.add(stat);
+                                    }
+                                }
+                                
+                                listener.onSuccess(estatisticas);
+                            })
+                            .addOnFailureListener(e -> {
+                                Log.e(TAG, "Erro ao buscar disciplinas", e);
+                                listener.onError(e.getMessage());
+                            });
+                })
+                .addOnFailureListener(e -> {
+                    Log.e(TAG, "Erro ao buscar ciclos", e);
+                    listener.onError(e.getMessage());
+                });
+    }
+    
     public interface OnCompleteListener {
         void onSuccess();
+        void onError(String error);
+    }
+    
+    public interface OnEstatisticasListener {
+        void onSuccess(List<DisciplinaStat> estatisticas);
         void onError(String error);
     }
 }

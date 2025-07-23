@@ -28,7 +28,7 @@
             android:layout_height="40dp"
             android:layout_marginStart="16dp"
             android:src="@drawable/ic_school"
-            app:tint="?attr/colorOnSurface"
+            app:tint="@color/focus_text_color"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintStart_toEndOf="@+id/viewCorDisciplina"
             app:layout_constraintBottom_toBottomOf="parent" />
@@ -40,6 +40,7 @@
             android:layout_marginStart="16dp"
             android:layout_marginEnd="8dp"
             android:text="Nome da Disciplina"
+            android:textColor="@color/focus_text_color"
             android:textSize="16sp"
             android:textStyle="bold"
             app:layout_constraintTop_toTopOf="@+id/imageViewIconeDisciplina"

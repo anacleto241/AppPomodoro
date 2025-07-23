@@ -3,11 +3,14 @@ package br.edu.ifsuldeminas.mch.apppomodoro.activities;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.github.mikephil.charting.charts.PieChart;
 import com.github.mikephil.charting.data.PieData;
@@ -21,14 +24,19 @@ import java.util.ArrayList;
 import java.util.List;
 
 import br.edu.ifsuldeminas.mch.apppomodoro.R;
-import br.edu.ifsuldeminas.mch.apppomodoro.data.dao.CicloDao;
+import br.edu.ifsuldeminas.mch.apppomodoro.adapters.DisciplinaEstatisticaAdapter;
 import br.edu.ifsuldeminas.mch.apppomodoro.models.DisciplinaStat;
+import br.edu.ifsuldeminas.mch.apppomodoro.repository.CicloRepository;
 import br.edu.ifsuldeminas.mch.apppomodoro.viewmodel.CicloViewModel;
 
 public class EstatisticasActivity extends AppCompatActivity {
     private TextView textViewTotalCiclos, textViewCiclosHoje, textViewCiclosSemana, textViewTempoTotal;
+    private TextView textViewNenhumaDisciplina;
+    private RecyclerView recyclerViewDisciplinas;
     private PieChart pieChart;
     private CicloViewModel viewModel;
+    private CicloRepository cicloRepository;
+    private DisciplinaEstatisticaAdapter disciplinaAdapter;
     private FirebaseAuth mAuth;
     
     @Override
@@ -37,12 +45,15 @@ public class EstatisticasActivity extends AppCompatActivity {
         setContentView(R.layout.activity_estatisticas);
         
         mAuth = FirebaseAuth.getInstance();
+        cicloRepository = new CicloRepository(this);
         
         setupToolbar();
         initViews();
         setupViewModel();
+        setupRecyclerView();
         setupChart();
         observeData();
+        carregarEstatisticasDisciplinas();
     }
     
     private void setupToolbar() {
@@ -59,6 +70,8 @@ public class EstatisticasActivity extends AppCompatActivity {
         textViewCiclosHoje = findViewById(R.id.textViewCiclosHoje);
         textViewCiclosSemana = findViewById(R.id.textViewCiclosSemana);
         textViewTempoTotal = findViewById(R.id.textViewTempoTotal);
+        textViewNenhumaDisciplina = findViewById(R.id.textViewNenhumaDisciplina);
+        recyclerViewDisciplinas = findViewById(R.id.recyclerViewDisciplinas);
         pieChart = findViewById(R.id.pieChart);
     }
     
@@ -69,6 +82,42 @@ public class EstatisticasActivity extends AppCompatActivity {
         FirebaseUser currentUser = mAuth.getCurrentUser();
         if (currentUser != null) {
             viewModel.setUsuarioId(currentUser.getUid());
+        }
+    }
+    
+    private void setupRecyclerView() {
+        disciplinaAdapter = new DisciplinaEstatisticaAdapter(new ArrayList<>());
+        recyclerViewDisciplinas.setLayoutManager(new LinearLayoutManager(this));
+        recyclerViewDisciplinas.setAdapter(disciplinaAdapter);
+    }
+    
+    private void carregarEstatisticasDisciplinas() {
+        FirebaseUser currentUser = mAuth.getCurrentUser();
+        if (currentUser != null) {
+            viewModel.buscarEstatisticasPorDisciplina(new CicloRepository.OnEstatisticasListener() {
+                @Override
+                public void onSuccess(List<DisciplinaStat> estatisticas) {
+                    runOnUiThread(() -> {
+                        if (estatisticas.isEmpty()) {
+                            recyclerViewDisciplinas.setVisibility(View.GONE);
+                            textViewNenhumaDisciplina.setVisibility(View.VISIBLE);
+                        } else {
+                            recyclerViewDisciplinas.setVisibility(View.VISIBLE);
+                            textViewNenhumaDisciplina.setVisibility(View.GONE);
+                            disciplinaAdapter.updateData(estatisticas);
+                            setupPieChartWithRealData(estatisticas);
+                        }
+                    });
+                }
+                
+                @Override
+                public void onError(String error) {
+                    runOnUiThread(() -> {
+                        recyclerViewDisciplinas.setVisibility(View.GONE);
+                        textViewNenhumaDisciplina.setVisibility(View.VISIBLE);
+                    });
+                }
+            });
         }
     }
     
@@ -114,6 +163,37 @@ public class EstatisticasActivity extends AppCompatActivity {
                 setupPieChart(stats);
             }
         });
+    }
+    
+    private void setupPieChartWithRealData(List<DisciplinaStat> estatisticas) {
+        List<PieEntry> entries = new ArrayList<>();
+        List<Integer> colors = new ArrayList<>();
+        
+        // Cores para o gráfico
+        int[] chartColors = {
+            Color.rgb(64, 89, 128), Color.rgb(149, 165, 124), Color.rgb(217, 184, 162),
+            Color.rgb(191, 134, 134), Color.rgb(179, 48, 80), Color.rgb(193, 37, 82),
+            Color.rgb(255, 102, 0), Color.rgb(245, 199, 0)
+        };
+        
+        for (int i = 0; i < estatisticas.size() && i < 8; i++) {
+            DisciplinaStat stat = estatisticas.get(i);
+            entries.add(new PieEntry(stat.getTotalTempo(), stat.getNome()));
+            colors.add(chartColors[i % chartColors.length]);
+        }
+        
+        if (!entries.isEmpty()) {
+            PieDataSet dataSet = new PieDataSet(entries, "Tempo por Disciplina");
+            dataSet.setColors(colors);
+            dataSet.setValueTextColor(Color.BLACK);
+            dataSet.setValueTextSize(12f);
+            
+            PieData data = new PieData(dataSet);
+            data.setValueFormatter(new PercentFormatter());
+            
+            pieChart.setData(data);
+            pieChart.invalidate();
+        }
     }
     
     private void setupPieChart(List<Object> stats) {

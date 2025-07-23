@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Dark Theme Colors -->
+    
+    <!-- Primary Colors - Adjusted for dark theme -->
+    <color name="colorPrimary">#FF6B6B</color>  <!-- Lighter red for better contrast -->
+    <color name="colorPrimaryDark">#E53935</color>  
+    <color name="colorAccent">#66BB6A</color>  <!-- Lighter green accent -->
+    
+    <!-- Background Colors - Dark theme -->
+    <color name="focus_background">#1A1A1A</color>  <!-- Very dark background -->
+    <color name="focus_text_color">#E0E0E0</color>  <!-- Light text for contrast -->
+    <color name="focus_button_background">#FF6B6B</color>  <!-- Red button -->
+    
+    <color name="short_break_background">#2C2C2C</color>  <!-- Dark gray background -->
+    <color name="short_break_text_color">#81C784</color>  <!-- Light green text -->
+    <color name="short_break_button_background">#4CAF50</color>  <!-- Green button -->
+    
+    <color name="long_break_background">#2C2C2C</color>  <!-- Dark gray background -->
+    <color name="long_break_text_color">#90CAF9</color>  <!-- Light blue text -->
+    <color name="long_break_button_background">#2196F3</color>  <!-- Blue button -->
+    
+    <!-- UI Element Colors -->
+    <color name="button_icon_color">#FFFFFF</color>
+    <color name="outline_text_color">#E0E0E0</color>  <!-- Light text -->
+    <color name="outline_border_color">#555555</color>  <!-- Dark border -->
+    
+    <!-- Background Colors -->
+    <color name="background">#121212</color>  <!-- Material dark background -->
+    <color name="backgroundDark">#1E1E1E</color>  <!-- Darker background -->
+    <color name="backgroundLight">#2C2C2C</color>  <!-- Lighter dark background -->
+    
+    <!-- Text Colors -->
+    <color name="textPrimary">#E0E0E0</color>  <!-- Light primary text -->
+    <color name="textSecondary">#B0B0B0</color>  <!-- Light secondary text -->
+    <color name="textHint">#757575</color>  <!-- Darker hint text -->
+    <color name="textOnPrimary">#FFFFFF</color>  <!-- White on primary -->
+    <color name="textOnDark">#E0E0E0</color>  <!-- Light on dark -->
+    
+    <!-- Card Colors -->
+    <color name="cardBackground">#2C2C2C</color>  <!-- Dark card background -->
+    <color name="cardShadow">#40000000</color>  <!-- Stronger shadow for dark theme -->
+    
+    <!-- Divider Colors -->
+    <color name="divider">#555555</color>  <!-- Dark divider -->
+    
+    <!-- Button Colors -->
+    <color name="buttonNormal">@color/colorPrimary</color>
+    <color name="buttonPressed">@color/colorPrimaryDark</color>
+    <color name="buttonDisabled">#555555</color>  <!-- Dark disabled button -->
+    <color name="buttonText">@color/textOnPrimary</color>
+    
+    <!-- Timer Colors - Adjusted for dark theme -->
+    <color name="timerActive">#66BB6A</color>  <!-- Lighter green -->
+    <color name="timerPaused">#FFB74D</color>  <!-- Lighter amber -->
+    <color name="timerFinished">#FF6B6B</color>  <!-- Lighter red -->
+    
+    <!-- Notification Colors -->
+    <color name="notificationBackground">@color/colorPrimary</color>
+    <color name="notificationText">@color/white</color>
+</resources>

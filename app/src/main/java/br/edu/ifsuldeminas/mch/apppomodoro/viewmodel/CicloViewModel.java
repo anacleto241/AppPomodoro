@@ -8,9 +8,8 @@ import android.app.Application;
 import java.util.ArrayList;
 import java.util.List;
 
-import java.util.List;
-
 import br.edu.ifsuldeminas.mch.apppomodoro.models.Ciclo;
+import br.edu.ifsuldeminas.mch.apppomodoro.models.DisciplinaStat;
 import br.edu.ifsuldeminas.mch.apppomodoro.repository.CicloRepository;
 
 public class CicloViewModel extends ViewModel {
@@ -84,6 +83,14 @@ public class CicloViewModel extends ViewModel {
     public LiveData<List<Object>> getEstatisticasPorDisciplina() {
         // Retorna uma lista vazia por enquanto - pode ser implementado depois
         return new MutableLiveData<>(new ArrayList<>());
+    }
+    
+    public void buscarEstatisticasPorDisciplina(CicloRepository.OnEstatisticasListener listener) {
+        if (repository != null && usuarioId != null) {
+            repository.getEstatisticasPorDisciplina(usuarioId, listener);
+        } else {
+            listener.onError("Usuário não logado");
+        }
     }
     
     public void limparHistorico() {

@@ -21,6 +21,11 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
+import com.google.mlkit.nl.translate.TranslateLanguage;
+import com.google.mlkit.nl.translate.Translation;
+import com.google.mlkit.nl.translate.Translator;
+import com.google.mlkit.nl.translate.TranslatorOptions;
+
 public class RecomendacoesActivity extends AppCompatActivity {
     private TextView textViewFrase, textViewAutor, textViewDica;
     private Button buttonNovaFrase;
@@ -70,6 +75,29 @@ public class RecomendacoesActivity extends AppCompatActivity {
     private void setupListeners() {
         buttonNovaFrase.setOnClickListener(v -> carregarFraseMotivacional());
     }
+
+    private void traduzirFraseParaPortugues(String fraseOriginal) {
+        TranslatorOptions options = new TranslatorOptions.Builder()
+                .setSourceLanguage(TranslateLanguage.ENGLISH)
+                .setTargetLanguage(TranslateLanguage.PORTUGUESE)
+                .build();
+
+        Translator translator = Translation.getClient(options);
+
+        translator.downloadModelIfNeeded().addOnSuccessListener(unused -> {
+            translator.translate(fraseOriginal)
+                    .addOnSuccessListener(fraseTraduzida -> {
+                        textViewFrase.setText("\"" + fraseTraduzida + "\"");
+                    })
+                    .addOnFailureListener(e -> {
+                        textViewFrase.setText("\"" + fraseOriginal + "\"");
+                        Toast.makeText(this, "Erro ao traduzir: " + e.getMessage(), Toast.LENGTH_SHORT).show();
+                    });
+        }).addOnFailureListener(e -> {
+            textViewFrase.setText("\"" + fraseOriginal + "\"");
+            Toast.makeText(this, "Erro ao baixar modelo de tradução.", Toast.LENGTH_SHORT).show();
+        });
+    }
     
     private void carregarFraseMotivacional() {
         progressBar.setVisibility(View.VISIBLE);
@@ -84,7 +112,7 @@ public class RecomendacoesActivity extends AppCompatActivity {
                 
                 if (response.isSuccessful() && response.body() != null && !response.body().isEmpty()) {
                     QuoteResponse quote = response.body().get(0);
-                    textViewFrase.setText("\"" + quote.getQuote() + "\"");
+                    traduzirFraseParaPortugues(quote.getQuote());
                     textViewAutor.setText("— " + quote.getAuthor());
                 } else {
                     mostrarFraseLocal();

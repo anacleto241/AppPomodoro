@@ -5,14 +5,14 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="?attr/colorSurface">
+    android:background="@color/focus_background">
 
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbar"
         android:layout_width="0dp"
         android:layout_height="?attr/actionBarSize"
-        android:background="?attr/colorPrimary"
-        app:titleTextColor="?attr/colorOnPrimary"
+        android:background="@color/colorPrimary"
+        app:titleTextColor="@color/white"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
@@ -39,7 +39,7 @@
                 android:text="Olá!"
                 android:textSize="24sp"
                 android:textStyle="bold"
-                android:textColor="?attr/colorOnSurface"
+                android:textColor="@color/focus_text_color"
                 android:layout_marginBottom="24dp" />
 
             <!-- Card de resumo rápido -->
@@ -99,6 +99,8 @@
                 android:text="Iniciar Novo Ciclo"
                 android:textSize="18sp"
                 android:textStyle="bold"
+                android:backgroundTint="@color/colorPrimary"
+                android:textColor="@color/white"
                 app:icon="@drawable/ic_play_arrow"
                 app:iconGravity="textStart"
                 app:cornerRadius="12dp"
@@ -126,6 +128,8 @@
                     android:textSize="14sp"
                     app:cornerRadius="8dp"
                     android:minHeight="80dp"
+                    android:textColor="@color/colorPrimary"
+                    app:iconTint="@color/colorPrimary"
                     style="@style/Widget.MaterialComponents.Button.TextButton.Icon" />
 
                 <com.google.android.material.button.MaterialButton
@@ -139,6 +143,8 @@
                     android:textSize="14sp"
                     app:cornerRadius="8dp"
                     android:minHeight="80dp"
+                    android:textColor="@color/colorPrimary"
+                    app:iconTint="@color/colorPrimary"
                     style="@style/Widget.MaterialComponents.Button.TextButton.Icon" />
 
                 <com.google.android.material.button.MaterialButton
@@ -152,6 +158,8 @@
                     android:textSize="14sp"
                     app:cornerRadius="8dp"
                     android:minHeight="80dp"
+                    android:textColor="@color/colorPrimary"
+                    app:iconTint="@color/colorPrimary"
                     style="@style/Widget.MaterialComponents.Button.TextButton.Icon" />
 
                 <com.google.android.material.button.MaterialButton
@@ -165,6 +173,8 @@
                     android:textSize="14sp"
                     app:cornerRadius="8dp"
                     android:minHeight="80dp"
+                    android:textColor="@color/colorPrimary"
+                    app:iconTint="@color/colorPrimary"
                     style="@style/Widget.MaterialComponents.Button.TextButton.Icon" />
 
             </GridLayout>

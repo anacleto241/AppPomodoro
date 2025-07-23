@@ -11,6 +11,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Pomodoro concluído"
+        android:textColor="@color/focus_text_color"
         android:textSize="16sp"/>
 
     <TextView
@@ -18,13 +19,13 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="25 minutos"
-        android:textColor="@android:color/darker_gray"/>
+        android:textColor="@color/focus_text_color"/>
 
     <TextView
         android:id="@+id/textViewData"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="10/05/2024 15:30"
-        android:textColor="@android:color/darker_gray"/>
+        android:textColor="@color/focus_text_color"/>
 
 </LinearLayout>

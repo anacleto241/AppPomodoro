@@ -6,8 +6,12 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
+import java.util.Locale;
+import java.util.TimeZone;
 
 import br.edu.ifsuldeminas.mch.apppomodoro.activities.HistoricoActivity;
 import br.edu.ifsuldeminas.mch.apppomodoro.activities.TelaPrincipalActivity;
@@ -59,18 +63,31 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         List<Ciclo> ciclos = new ArrayList<>();
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor cursor = db.rawQuery("SELECT * FROM " + TABLE_CICLOS + " ORDER BY " + COL_DATA + " DESC", null);
+
         if (cursor.moveToFirst()) {
             do {
+                String dataString = cursor.getString(3); // "yyyy-MM-dd HH:mm:ss"
+                long timestamp = 0;
+                try {
+                    SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault());
+                    format.setTimeZone(TimeZone.getTimeZone("UTC")); // Corrige o fuso!
+                    Date date = format.parse(dataString);
+                    timestamp = date != null ? date.getTime() : 0;
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+
                 Ciclo ciclo = new Ciclo(
-                        cursor.getString(0),        // id (convert to String)
-                        null,                       // disciplinaId - SQLite legacy doesn't have this
-                        cursor.getString(1),        // descricao (column 1, not 2)
-                        cursor.getInt(2),          // duracao (column 2, not 3)
-                        cursor.getLong(3)          // dataHora (column 3, not 4)
+                        cursor.getString(0),     // id
+                        null,                    // disciplinaId
+                        cursor.getString(1),     // descricao
+                        cursor.getInt(2),        // duracao
+                        timestamp                // dataHora em millis
                 );
                 ciclos.add(ciclo);
             } while (cursor.moveToNext());
         }
+
         cursor.close();
         return ciclos;
     }

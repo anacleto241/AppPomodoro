@@ -52,8 +52,8 @@ public class NewCronometroActivity extends AppCompatActivity {
     private View layoutConfiguracao;
     
     private CountDownTimer countDownTimer;
-    private long tempoRestante = 25 * 60 * 1000; // 25 minutos em milissegundos
-    private long tempoInicial = 25 * 60 * 1000;
+    private long tempoRestante = 1 * 60 * 1000; // 25 minutos em milissegundos
+    private long tempoInicial = 1 * 60 * 1000;
     private boolean timerRodando = false;
     private boolean isPausa = false;
     
