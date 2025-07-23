@@ -4,4 +4,10 @@
         <!-- Customize your dark theme here. -->
         <!-- <item name="colorPrimary">@color/my_dark_primary</item> -->
     </style>
+    
+    <!-- Theme without ActionBar for activities that manage their own toolbar -->
+    <style name="Theme.AppPomodoro.NoActionBar" parent="Theme.AppPomodoro">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+    </style>
 </resources>

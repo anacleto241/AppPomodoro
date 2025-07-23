@@ -1,0 +1,17 @@
+{
+    "java.configuration.updateBuildConfiguration": "automatic",
+    "java.project.sourcePaths": [
+        "app/src/main/java"
+    ],
+    "java.project.outputPath": "app/build/intermediates/javac/debug/classes",
+    "java.project.referencedLibraries": [
+        "app/build/intermediates/**/*.jar",
+        "app/libs/**/*.jar"
+    ],
+    "java.compile.nullAnalysis.mode": "disabled",
+    "files.exclude": {
+        "**/build": true,
+        "**/.gradle": true
+    },
+    "java.project.resourceFilters": ["node_modules", ".git"]
+}

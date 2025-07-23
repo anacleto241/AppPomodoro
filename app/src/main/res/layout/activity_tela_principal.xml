@@ -5,57 +5,172 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/backgroundLight">
+    android:background="?attr/colorSurface">
 
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbar"
         android:layout_width="0dp"
         android:layout_height="?attr/actionBarSize"
-        android:background="@color/backgroundLight"
-        app:titleTextColor="@color/black"
+        android:background="?attr/colorPrimary"
+        app:titleTextColor="?attr/colorOnPrimary"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
 
-    <TextView
-        android:id="@+id/textViewCiclosConcluidos"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Ciclos concluídos: 0"
-        android:textColor="@color/textPrimary"
-        android:textSize="18sp"
-        android:gravity="center"
-        app:layout_constraintVertical_bias="0.2"
-        app:layout_constraintTop_toBottomOf="@id/toolbar"
-        app:layout_constraintBottom_toTopOf="@id/buttonIniciarCiclo"
+    <ScrollView
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintTop_toBottomOf="@+id/toolbar"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        tools:text="Ciclos concluídos: 5" /> <Button
-    android:id="@+id/buttonIniciarCiclo"
-    android:layout_width="0dp"
-    android:layout_height="wrap_content"
-    android:layout_marginStart="32dp"
-    android:layout_marginEnd="32dp"
-    android:backgroundTint="@color/colorPrimary"
-    android:text="Iniciar Ciclo de 25min"
-    android:textColor="@color/white"
-    app:layout_constraintBottom_toTopOf="@+id/buttonVerHistorico"
-    app:layout_constraintStart_toStartOf="parent"
-    app:layout_constraintEnd_toEndOf="parent"
-    app:layout_constraintTop_toTopOf="parent"
-    app:layout_constraintVertical_chainStyle="packed"
-    app:layout_constraintVertical_bias="0.7"/> <Button
-    android:id="@+id/buttonVerHistorico"
-    android:layout_width="0dp"
-    android:layout_height="wrap_content"
-    android:layout_marginStart="32dp"
-    android:layout_marginEnd="32dp"
-    android:layout_marginTop="16dp"
-    android:backgroundTint="@color/colorAccent"
-    android:text="Ver Histórico"
-    android:textColor="@color/white"
-    app:layout_constraintTop_toBottomOf="@id/buttonIniciarCiclo"
-    app:layout_constraintStart_toStartOf="parent"
-    app:layout_constraintEnd_toEndOf="parent"
-    app:layout_constraintBottom_toBottomOf="parent"
-    app:layout_constraintVertical_bias="0.1"/> </androidx.constraintlayout.widget.ConstraintLayout>
+        app:layout_constraintBottom_toBottomOf="parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="16dp">
+
+            <!-- Mensagem de boas-vindas -->
+            <TextView
+                android:id="@+id/textViewBoasVindas"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Olá!"
+                android:textSize="24sp"
+                android:textStyle="bold"
+                android:textColor="?attr/colorOnSurface"
+                android:layout_marginBottom="24dp" />
+
+            <!-- Card de resumo rápido -->
+            <com.google.android.material.card.MaterialCardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="24dp"
+                app:cardCornerRadius="12dp"
+                app:cardElevation="4dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="16dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Resumo de Hoje"
+                        android:textSize="18sp"
+                        android:textStyle="bold"
+                        android:layout_marginBottom="12dp" />
+
+                    <TextView
+                        android:id="@+id/textViewCiclosHoje"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Hoje: 0 ciclos"
+                        android:textSize="14sp"
+                        android:layout_marginBottom="4dp" />
+
+                    <TextView
+                        android:id="@+id/textViewCiclosConcluidos"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Total de ciclos: 0"
+                        android:textSize="14sp"
+                        android:layout_marginBottom="4dp" />
+
+                    <TextView
+                        android:id="@+id/textViewTempoTotal"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Tempo total: 0h 0min"
+                        android:textSize="14sp" />
+
+                </LinearLayout>
+
+            </com.google.android.material.card.MaterialCardView>
+
+            <!-- Botão principal - Iniciar Ciclo -->
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/buttonIniciarCiclo"
+                android:layout_width="match_parent"
+                android:layout_height="64dp"
+                android:text="Iniciar Novo Ciclo"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                app:icon="@drawable/ic_play_arrow"
+                app:iconGravity="textStart"
+                app:cornerRadius="12dp"
+                android:layout_marginBottom="16dp"
+                style="@style/Widget.MaterialComponents.Button.Icon" />
+
+            <!-- Grid de funcionalidades -->
+            <GridLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:columnCount="2"
+                android:rowCount="2"
+                android:alignmentMode="alignMargins"
+                android:columnOrderPreserved="false"
+                android:useDefaultMargins="true">
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/buttonVerHistorico"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_columnWeight="1"
+                    android:text="Histórico"
+                    app:icon="@drawable/ic_history"
+                    app:iconGravity="top"
+                    android:textSize="14sp"
+                    app:cornerRadius="8dp"
+                    android:minHeight="80dp"
+                    style="@style/Widget.MaterialComponents.Button.TextButton.Icon" />
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/buttonEstatisticas"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_columnWeight="1"
+                    android:text="Estatísticas"
+                    app:icon="@drawable/ic_bar_chart"
+                    app:iconGravity="top"
+                    android:textSize="14sp"
+                    app:cornerRadius="8dp"
+                    android:minHeight="80dp"
+                    style="@style/Widget.MaterialComponents.Button.TextButton.Icon" />
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/buttonDisciplinas"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_columnWeight="1"
+                    android:text="Disciplinas"
+                    app:icon="@drawable/ic_school"
+                    app:iconGravity="top"
+                    android:textSize="14sp"
+                    app:cornerRadius="8dp"
+                    android:minHeight="80dp"
+                    style="@style/Widget.MaterialComponents.Button.TextButton.Icon" />
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/buttonMotivacao"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_columnWeight="1"
+                    android:text="Motivação"
+                    app:icon="@drawable/ic_lightbulb"
+                    app:iconGravity="top"
+                    android:textSize="14sp"
+                    app:cornerRadius="8dp"
+                    android:minHeight="80dp"
+                    style="@style/Widget.MaterialComponents.Button.TextButton.Icon" />
+
+            </GridLayout>
+
+        </LinearLayout>
+
+    </ScrollView>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

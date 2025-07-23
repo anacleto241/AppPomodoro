@@ -62,10 +62,11 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         if (cursor.moveToFirst()) {
             do {
                 Ciclo ciclo = new Ciclo(
-                        cursor.getInt(0),
-                        cursor.getString(1),
-                        cursor.getInt(2),
-                        cursor.getString(3)
+                        cursor.getInt(0),           // id
+                        cursor.getString(1),        // disciplinaId  
+                        cursor.getString(2),        // descricao
+                        cursor.getInt(3),          // duracao
+                        cursor.getLong(4)          // dataHora
                 );
                 ciclos.add(ciclo);
             } while (cursor.moveToNext());

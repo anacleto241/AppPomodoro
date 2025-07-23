@@ -1,0 +1,17 @@
+{
+  "folders": [
+    {
+      "path": "."
+    }
+  ],
+  "settings": {
+    "java.project.sourcePaths": [
+      "app/src/main/java"
+    ],
+    "java.project.outputPath": "app/build/intermediates/javac/debug/classes",
+    "java.project.referencedLibraries": [
+      "app/build/intermediates/compile_and_runtime_not_namespaced_r_class_jar/**/*.jar",
+      "app/libs/**/*.jar"
+    ]
+  }
+}

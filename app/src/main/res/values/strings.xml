@@ -6,4 +6,7 @@
     <string name="ciclos_concluidos">Ciclos concluídos: %d</string>
     <string name="app_version">App Pomodoro Educacional v1.0</string>
     <string name="historico_lista_descricao">Lista de ciclos Pomodoro concluídos</string>
+    
+    <!-- Google Sign In - Este valor será substituído automaticamente pelo Firebase -->
+    <string name="default_web_client_id" translatable="false">your_web_client_id_here</string>
 </resources>
