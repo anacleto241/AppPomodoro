@@ -62,11 +62,11 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         if (cursor.moveToFirst()) {
             do {
                 Ciclo ciclo = new Ciclo(
-                        cursor.getInt(0),           // id
-                        cursor.getString(1),        // disciplinaId  
-                        cursor.getString(2),        // descricao
-                        cursor.getInt(3),          // duracao
-                        cursor.getLong(4)          // dataHora
+                        cursor.getString(0),        // id (convert to String)
+                        null,                       // disciplinaId - SQLite legacy doesn't have this
+                        cursor.getString(1),        // descricao (column 1, not 2)
+                        cursor.getInt(2),          // duracao (column 2, not 3)
+                        cursor.getLong(3)          // dataHora (column 3, not 4)
                 );
                 ciclos.add(ciclo);
             } while (cursor.moveToNext());
@@ -84,9 +84,9 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return total;
     }
 
-    public void excluirCiclo(int id) {
+    public void excluirCiclo(String id) {
         SQLiteDatabase db = this.getWritableDatabase();
-        db.delete(TABLE_CICLOS, COL_ID + " = ?", new String[]{String.valueOf(id)});
+        db.delete(TABLE_CICLOS, COL_ID + " = ?", new String[]{id});
         db.close();
     }
 }

@@ -121,6 +121,8 @@ public class NewCronometroActivity extends AppCompatActivity {
     
     private void setupViewModels() {
         cicloViewModel = new ViewModelProvider(this).get(CicloViewModel.class);
+        cicloViewModel.setApplication(getApplication());
+        
         disciplinaViewModel = new ViewModelProvider(this).get(DisciplinaViewModel.class);
         
         // Configurar usuário autenticado

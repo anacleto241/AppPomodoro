@@ -5,7 +5,7 @@ import java.util.Date;
 import java.util.Locale;
 
 public class Ciclo {
-    private int id;
+    private String id; // Changed to String for Firestore compatibility
     private String disciplinaId;
     private String disciplinaNome; // Para exibição
     private String descricao;
@@ -15,7 +15,7 @@ public class Ciclo {
 
     public Ciclo() {}
 
-    public Ciclo(int id, String disciplinaId, String descricao, int duracao, long dataHora) {
+    public Ciclo(String id, String disciplinaId, String descricao, int duracao, long dataHora) {
         this.id = id;
         this.disciplinaId = disciplinaId;
         this.descricao = descricao;
@@ -32,7 +32,7 @@ public class Ciclo {
     }
 
     // Getters
-    public int getId() { return id; }
+    public String getId() { return id; }
     public String getDisciplinaId() { return disciplinaId; }
     public String getDisciplinaNome() { return disciplinaNome; }
     public String getDescricao() { return descricao; }
@@ -47,7 +47,7 @@ public class Ciclo {
     }
     
     // Setters
-    public void setId(int id) { this.id = id; }
+    public void setId(String id) { this.id = id; }
     public void setDisciplinaId(String disciplinaId) { this.disciplinaId = disciplinaId; }
     public void setDisciplinaNome(String disciplinaNome) { this.disciplinaNome = disciplinaNome; }
     public void setDescricao(String descricao) { this.descricao = descricao; }

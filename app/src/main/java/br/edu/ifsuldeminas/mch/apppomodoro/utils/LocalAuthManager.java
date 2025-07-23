@@ -59,6 +59,13 @@ public class LocalAuthManager {
     }
     
     /**
+     * Alias para createAccount (compatibilidade)
+     */
+    public boolean signUp(String name, String email, String password) {
+        return createAccount(name, email, password);
+    }
+    
+    /**
      * Login local
      */
     public boolean signIn(String email, String password) {
