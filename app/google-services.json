@@ -1,36 +1,26 @@
 {
   "project_info": {
-    "project_number": "123456789",
-    "project_id": "apppomodoro-demo",
-    "storage_bucket": "apppomodoro-demo.appspot.com"
+    "project_number": "41750544926",
+    "project_id": "aplicativopomodoro-dfa96",
+    "storage_bucket": "aplicativopomodoro-dfa96.firebasestorage.app"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:123456789:android:abcdefghijk",
+        "mobilesdk_app_id": "1:41750544926:android:8f01890263265002c3640f",
         "android_client_info": {
-          "package_name": "br.edu.ifsuldeminas.mach.apppomodoro"
+          "package_name": "br.edu.ifsuldeminas.mch.apppomodoro"
         }
       },
-      "oauth_client": [
-        {
-          "client_id": "123456789-abcdefghijk.apps.googleusercontent.com",
-          "client_type": 3
-        }
-      ],
+      "oauth_client": [],
       "api_key": [
         {
-          "current_key": "AIzaSyDemoKey123456789"
+          "current_key": "AIzaSyAhGTum7pUlMjFqDvpb-8lWgLZ4ZlHNoKI"
         }
       ],
       "services": {
         "appinvite_service": {
-          "other_platform_oauth_client": [
-            {
-              "client_id": "123456789-abcdefghijk.apps.googleusercontent.com",
-              "client_type": 3
-            }
-          ]
+          "other_platform_oauth_client": []
         }
       }
     }
