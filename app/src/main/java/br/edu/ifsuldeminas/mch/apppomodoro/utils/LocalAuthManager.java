@@ -32,17 +32,14 @@ public class LocalAuthManager {
      */
     public boolean createAccount(String name, String email, String password) {
         try {
-            // Verificar se email já existe
             if (prefs.contains("user_" + email)) {
                 Log.w(TAG, "Email já cadastrado: " + email);
                 return false;
             }
-            
-            // Gerar hash da senha
+
             String passwordHash = hashPassword(password);
             String userId = UUID.randomUUID().toString();
-            
-            // Salvar dados do usuário
+
             SharedPreferences.Editor editor = prefs.edit();
             editor.putString("user_" + email, passwordHash);
             editor.putString("name_" + email, name);
@@ -58,16 +55,12 @@ public class LocalAuthManager {
         }
     }
     
-    /**
-     * Alias para createAccount (compatibilidade)
-     */
+
     public boolean signUp(String name, String email, String password) {
         return createAccount(name, email, password);
     }
     
-    /**
-     * Login local
-     */
+
     public boolean signIn(String email, String password) {
         try {
             String storedHash = prefs.getString("user_" + email, null);
@@ -78,7 +71,6 @@ public class LocalAuthManager {
             
             String passwordHash = hashPassword(password);
             if (storedHash.equals(passwordHash)) {
-                // Login bem-sucedido - salvar sessão
                 String userId = prefs.getString("id_" + email, UUID.randomUUID().toString());
                 String name = prefs.getString("name_" + email, "Usuário");
                 
@@ -101,37 +93,27 @@ public class LocalAuthManager {
         }
     }
     
-    /**
-     * Verificar se usuário está logado
-     */
+
     public boolean isSignedIn() {
         return prefs.getString(KEY_CURRENT_USER_ID, null) != null;
     }
     
-    /**
-     * Obter ID do usuário atual
-     */
+
     public String getCurrentUserId() {
         return prefs.getString(KEY_CURRENT_USER_ID, null);
     }
     
-    /**
-     * Obter email do usuário atual
-     */
+
     public String getCurrentUserEmail() {
         return prefs.getString(KEY_CURRENT_USER_EMAIL, null);
     }
     
-    /**
-     * Obter nome do usuário atual
-     */
+
     public String getCurrentUserName() {
         return prefs.getString(KEY_CURRENT_USER_NAME, "Usuário");
     }
     
-    /**
-     * Logout
-     */
+
     public void signOut() {
         SharedPreferences.Editor editor = prefs.edit();
         editor.remove(KEY_CURRENT_USER_ID);
@@ -142,9 +124,7 @@ public class LocalAuthManager {
         Log.d(TAG, "Logout local realizado");
     }
     
-    /**
-     * Hash da senha (simples para demonstração)
-     */
+
     private String hashPassword(String password) throws NoSuchAlgorithmException {
         MessageDigest md = MessageDigest.getInstance("SHA-256");
         byte[] hash = md.digest(password.getBytes());

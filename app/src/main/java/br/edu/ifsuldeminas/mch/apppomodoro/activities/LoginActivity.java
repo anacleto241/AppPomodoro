@@ -37,8 +37,7 @@ public class LoginActivity extends AppCompatActivity {
     private GoogleSignInClient mGoogleSignInClient;
     private LocalAuthManager localAuthManager;
     private boolean useLocalAuth = false;
-    
-    // ActivityResultLauncher para Google Sign In
+
     private ActivityResultLauncher<Intent> googleSignInLauncher;
     
     @Override
@@ -46,19 +45,16 @@ public class LoginActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
-        // Inicializar autenticação local
+
         localAuthManager = new LocalAuthManager(this);
-        
-        // Verificar se usuário já está logado localmente
+
         if (localAuthManager.isSignedIn()) {
             irParaBoasVindas();
             return;
         }
 
-        // Garantir que Firebase está inicializado
         ensureFirebaseInitialized();
-        
-        // Configurar Google Sign In
+
         setupGoogleSignIn();
         
         initViews();
@@ -67,16 +63,13 @@ public class LoginActivity extends AppCompatActivity {
     
     private void ensureFirebaseInitialized() {
         try {
-            // Verificar se já está inicializado
             if (FirebaseApp.getApps(this).isEmpty()) {
                 Log.w(TAG, "Firebase não inicializado, tentando inicializar...");
                 FirebaseApp.initializeApp(this);
             }
-            
-            // Tentar obter instância do Auth
+
             mAuth = FirebaseAuth.getInstance();
-            
-            // Verificar se usuário já está logado
+
             FirebaseUser currentUser = mAuth.getCurrentUser();
             if (currentUser != null) {
                 Log.d(TAG, "Usuário já logado, redirecionando...");
@@ -93,7 +86,6 @@ public class LoginActivity extends AppCompatActivity {
     
     private void setupGoogleSignIn() {
         try {
-            // Configure Google Sign In
             GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
                     .requestIdToken(getString(R.string.default_web_client_id))
                     .requestEmail()
@@ -104,8 +96,7 @@ public class LoginActivity extends AppCompatActivity {
             Log.w(TAG, "Erro ao configurar Google Sign In: " + e.getMessage());
             mGoogleSignInClient = null;
         }
-        
-        // Initialize ActivityResultLauncher
+
         googleSignInLauncher = registerForActivityResult(
                 new ActivityResultContracts.StartActivityForResult(),
                 result -> {
@@ -138,7 +129,6 @@ public class LoginActivity extends AppCompatActivity {
         
         if (buttonGoogleLogin != null) {
             buttonGoogleLogin.setOnClickListener(v -> signInWithGoogle());
-            // Ocultar botão Google se não estiver configurado
             if (mGoogleSignInClient == null) {
                 buttonGoogleLogin.setVisibility(android.view.View.GONE);
                 TextView textViewOu = findViewById(R.id.textViewOu);
@@ -164,8 +154,7 @@ public class LoginActivity extends AppCompatActivity {
         
         buttonLogin.setEnabled(false);
         buttonLogin.setText("Entrando...");
-        
-        // Tentar Firebase primeiro, usar Local Auth como fallback
+
         if (mAuth != null && !useLocalAuth) {
             mAuth.signInWithEmailAndPassword(email, senha)
                     .addOnCompleteListener(this, task -> {
@@ -175,7 +164,6 @@ public class LoginActivity extends AppCompatActivity {
                             Toast.makeText(this, "Login realizado com sucesso!", Toast.LENGTH_SHORT).show();
                             irParaBoasVindas();
                         } else {
-                            // Firebase falhou - tentar Local Auth
                             String error = task.getException() != null ? 
                                     task.getException().getMessage() : "Erro desconhecido";
                             Log.e(TAG, "Erro no login: " + error);
@@ -193,7 +181,6 @@ public class LoginActivity extends AppCompatActivity {
                         }
                     });
         } else {
-            // Usar Local Auth diretamente
             realizarLoginLocal(email, senha);
         }
     }

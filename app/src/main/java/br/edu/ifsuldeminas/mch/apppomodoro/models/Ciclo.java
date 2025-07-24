@@ -5,9 +5,9 @@ import java.util.Date;
 import java.util.Locale;
 
 public class Ciclo {
-    private String id; // Changed to String for Firestore compatibility
+    private String id;
     private String disciplinaId;
-    private String disciplinaNome; // Para exibição
+    private String disciplinaNome;
     private String descricao;
     private int duracao;
     private long dataHora;
@@ -31,7 +31,6 @@ public class Ciclo {
         this.usuarioId = usuarioId;
     }
 
-    // Getters
     public String getId() { return id; }
     public String getDisciplinaId() { return disciplinaId; }
     public String getDisciplinaNome() { return disciplinaNome; }
@@ -45,8 +44,7 @@ public class Ciclo {
         SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm", Locale.getDefault());
         return sdf.format(new Date(dataHora));
     }
-    
-    // Setters
+
     public void setId(String id) { this.id = id; }
     public void setDisciplinaId(String disciplinaId) { this.disciplinaId = disciplinaId; }
     public void setDisciplinaNome(String disciplinaNome) { this.disciplinaNome = disciplinaNome; }

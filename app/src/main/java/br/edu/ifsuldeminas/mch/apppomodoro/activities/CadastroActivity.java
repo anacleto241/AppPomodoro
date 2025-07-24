@@ -45,8 +45,7 @@ public class CadastroActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_cadastro);
-        
-        // Inicializar autenticação local
+
         localAuthManager = new LocalAuthManager(this);
         
         try {
@@ -56,8 +55,7 @@ public class CadastroActivity extends AppCompatActivity {
             Toast.makeText(this, "Usando modo offline", Toast.LENGTH_SHORT).show();
             useLocalAuth = true;
         }
-        
-        // Configurar Google Sign In
+
         setupGoogleSignIn();
         
         initViews();
@@ -66,7 +64,6 @@ public class CadastroActivity extends AppCompatActivity {
     
     private void setupGoogleSignIn() {
         try {
-            // Configure Google Sign In
             GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
                     .requestIdToken(getString(R.string.default_web_client_id))
                     .requestEmail()
@@ -77,8 +74,7 @@ public class CadastroActivity extends AppCompatActivity {
             Log.w(TAG, "Erro ao configurar Google Sign In: " + e.getMessage());
             mGoogleSignInClient = null;
         }
-        
-        // Initialize ActivityResultLauncher
+
         googleSignInLauncher = registerForActivityResult(
                 new ActivityResultContracts.StartActivityForResult(),
                 result -> {
@@ -113,7 +109,6 @@ public class CadastroActivity extends AppCompatActivity {
         
         if (buttonGoogleSignUp != null) {
             buttonGoogleSignUp.setOnClickListener(v -> signUpWithGoogle());
-            // Ocultar botão Google se não estiver configurado
             if (mGoogleSignInClient == null) {
                 buttonGoogleSignUp.setVisibility(android.view.View.GONE);
             }
@@ -145,13 +140,11 @@ public class CadastroActivity extends AppCompatActivity {
         
         buttonCadastrar.setEnabled(false);
         buttonCadastrar.setText("Cadastrando...");
-        
-        // Tentar Firebase primeiro, usar Local Auth como fallback
+
         if (mAuth != null && !useLocalAuth) {
             mAuth.createUserWithEmailAndPassword(email, senha)
                     .addOnCompleteListener(this, task -> {
                         if (task.isSuccessful()) {
-                            // Atualizar o perfil com o nome do usuário
                             UserProfileChangeRequest profileUpdates = new UserProfileChangeRequest.Builder()
                                     .setDisplayName(nome)
                                     .build();
@@ -170,7 +163,6 @@ public class CadastroActivity extends AppCompatActivity {
                                         }
                                     });
                         } else {
-                            // Firebase falhou - tentar Local Auth
                             String error = task.getException() != null ? 
                                     task.getException().getMessage() : "Erro desconhecido";
                             Log.e(TAG, "Erro no cadastro: " + error);
@@ -187,7 +179,6 @@ public class CadastroActivity extends AppCompatActivity {
                         }
                     });
         } else {
-            // Usar Local Auth diretamente
             realizarCadastroLocal(nome, email, senha);
         }
     }

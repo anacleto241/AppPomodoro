@@ -52,8 +52,8 @@ public class NewCronometroActivity extends AppCompatActivity {
     private View layoutConfiguracao;
     
     private CountDownTimer countDownTimer;
-    private long tempoRestante = 1 * 60 * 1000; // 25 minutos em milissegundos
-    private long tempoInicial = 1 * 60 * 1000;
+    private long tempoRestante = 25 * 60 * 1000;
+    private long tempoInicial = 25 * 60 * 1000;
     private boolean timerRodando = false;
     private boolean isPausa = false;
     
@@ -81,8 +81,7 @@ public class NewCronometroActivity extends AppCompatActivity {
         setupListeners();
         updateTimerDisplay();
         observeData();
-        
-        // Solicitar permissões para alarmes exatos (Android 12+)
+
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
             AlarmManager alarmManager = (AlarmManager) getSystemService(ALARM_SERVICE);
             if (!alarmManager.canScheduleExactAlarms()) {
@@ -102,14 +101,12 @@ public class NewCronometroActivity extends AppCompatActivity {
     }
 
     private void initViews() {
-        // Views principais do cronômetro
         textViewTipoTimer = findViewById(R.id.tv_timer_type_label);
         textViewMinutos = findViewById(R.id.tv_minutes);
         textViewSegundos = findViewById(R.id.tv_seconds);
         buttonStartPause = findViewById(R.id.btn_start_pause);
         buttonMoreOptions = findViewById(R.id.btn_more_options);
-        
-        // Views de configuração
+
         layoutConfiguracao = findViewById(R.id.layoutConfiguracao);
         spinnerDisciplinas = findViewById(R.id.spinnerDisciplinas);
         editTextDescricao = findViewById(R.id.editTextDescricao);
@@ -124,8 +121,7 @@ public class NewCronometroActivity extends AppCompatActivity {
         cicloViewModel.setApplication(getApplication());
         
         disciplinaViewModel = new ViewModelProvider(this).get(DisciplinaViewModel.class);
-        
-        // Configurar usuário autenticado
+
         FirebaseUser currentUser = mAuth.getCurrentUser();
         if (currentUser != null) {
             cicloViewModel.setUsuarioId(currentUser.getUid());
@@ -154,8 +150,7 @@ public class NewCronometroActivity extends AppCompatActivity {
                 disciplinasAdapter.clear();
                 disciplinasAdapter.addAll(nomes);
                 disciplinasAdapter.notifyDataSetChanged();
-                
-                // Mostrar mensagem se não houver disciplinas
+
                 if (disciplinasList.isEmpty()) {
                     Toast.makeText(this, "Você ainda não tem disciplinas cadastradas. " +
                             "Vá em Disciplinas para cadastrar.", Toast.LENGTH_LONG).show();
@@ -174,7 +169,6 @@ public class NewCronometroActivity extends AppCompatActivity {
         });
         
         buttonMoreOptions.setOnClickListener(v -> {
-            // Mostrar opções: cancelar, ir para disciplinas, etc.
             if (timerRodando) {
                 cancelarTimer();
             } else {
@@ -190,8 +184,7 @@ public class NewCronometroActivity extends AppCompatActivity {
             Toast.makeText(this, "Selecione uma disciplina primeiro", Toast.LENGTH_SHORT).show();
             return;
         }
-        
-        // Esconder layout de configuração
+
         layoutConfiguracao.setVisibility(View.GONE);
         textViewTipoTimer.setText(isPausa ? "Break" : "Focus");
         
@@ -200,7 +193,6 @@ public class NewCronometroActivity extends AppCompatActivity {
         }
 
         try {
-            // Configurar alarme
             Intent intent = new Intent(this, AlarmReceiver.class);
             intent.putExtra("message", isPausa ? "Pausa finalizada! Hora de estudar." : "Pomodoro finalizado! Hora de descansar.");
 
@@ -217,7 +209,6 @@ public class NewCronometroActivity extends AppCompatActivity {
                 alarmManager.setExactAndAllowWhileIdle(AlarmManager.RTC_WAKEUP, triggerAtMillis, pendingIntent);
             }
 
-            // Iniciar contador
             countDownTimer = new CountDownTimer(tempoRestante, 1000) {
                 @Override
                 public void onTick(long millisUntilFinished) {
@@ -244,7 +235,6 @@ public class NewCronometroActivity extends AppCompatActivity {
     }
 
     private void pausarTimer() {
-        // Cancelar alarme
         Intent intent = new Intent(this, AlarmReceiver.class);
         PendingIntent pendingIntent = PendingIntent.getBroadcast(this, 1, intent,
                 PendingIntent.FLAG_UPDATE_CURRENT | PendingIntent.FLAG_IMMUTABLE);
@@ -296,13 +286,10 @@ public class NewCronometroActivity extends AppCompatActivity {
             textViewSegundos.setText("00");
             
             if (!isPausa) {
-                // Salvar o ciclo completo
                 salvarCiclo();
-                
-                // Iniciar pausa
+
                 iniciarPausa();
             } else {
-                // Finalizar pausa, voltar ao foco
                 finalizarPausa();
             }
             
@@ -321,8 +308,7 @@ public class NewCronometroActivity extends AppCompatActivity {
             }
             
             cicloViewModel.inserirCiclo(disciplinaSelecionada.getId(), descricao, 25);
-            
-            // Também salvar no banco local antigo (por compatibilidade)
+
             dbHelper.adicionarCiclo(descricao, 25);
         }
     }
@@ -341,7 +327,7 @@ public class NewCronometroActivity extends AppCompatActivity {
     
     private void finalizarPausa() {
         isPausa = false;
-        tempoRestante = 25 * 60 * 1000; // Voltar para 25 minutos
+        tempoRestante = 25 * 60 * 1000;
         tempoInicial = tempoRestante;
         timerRodando = false;
         

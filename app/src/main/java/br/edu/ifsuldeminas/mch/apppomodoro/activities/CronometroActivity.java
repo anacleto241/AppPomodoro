@@ -33,22 +33,21 @@ public class CronometroActivity extends AppCompatActivity {
     private MaterialButton btnStartPause;
     private MaterialButton btnMoreOptions;
     private MaterialButton btnFastForward;
-    private ConstraintLayout rootLayout; // Reference to the root layout
+    private ConstraintLayout rootLayout;
 
     private CountDownTimer countDownTimer;
     private long timeLeftInMillis;
-    private long focusTimeMillis = 25 * 60 * 1000; // 25 minutes
-    private long shortBreakTimeMillis = 5 * 60 * 1000; // 5 minutes
-    private long longBreakTimeMillis = 15 * 60 * 1000; // 15 minutes
+    private long focusTimeMillis = 25 * 60 * 1000;
+    private long shortBreakTimeMillis = 5 * 60 * 1000;
+    private long longBreakTimeMillis = 15 * 60 * 1000;
 
     private boolean timerRunning;
 
-    // Define timer states
     private enum TimerState {
         FOCUS, SHORT_BREAK, LONG_BREAK
     }
     private TimerState currentTimerState = TimerState.FOCUS;
-    private int completedFocusCycles = 0; // To track for long breaks
+    private int completedFocusCycles = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,7 +57,7 @@ public class CronometroActivity extends AppCompatActivity {
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         if (getSupportActionBar() != null) {
-            getSupportActionBar().setTitle(""); // No title on toolbar
+            getSupportActionBar().setTitle("");
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         }
 
@@ -68,10 +67,10 @@ public class CronometroActivity extends AppCompatActivity {
         btnStartPause = findViewById(R.id.btn_start_pause);
         btnMoreOptions = findViewById(R.id.btn_more_options);
         btnFastForward = findViewById(R.id.btn_fast_forward);
-        rootLayout = findViewById(R.id.cronometro_layout_root); // Get reference to the root layout
+        rootLayout = findViewById(R.id.cronometro_layout_root);
 
-        timeLeftInMillis = focusTimeMillis; // Start with focus time
-        updateUIForState(TimerState.FOCUS); // Set initial UI style
+        timeLeftInMillis = focusTimeMillis;
+        updateUIForState(TimerState.FOCUS);
 
         btnStartPause.setOnClickListener(v -> {
             if (timerRunning) {
@@ -81,8 +80,8 @@ public class CronometroActivity extends AppCompatActivity {
             }
         });
 
-        btnFastForward.setOnClickListener(v -> skipTimer()); // Implement skip
-        btnMoreOptions.setOnClickListener(v -> showMoreOptions()); // Implement more options
+        btnFastForward.setOnClickListener(v -> skipTimer());
+        btnMoreOptions.setOnClickListener(v -> showMoreOptions());
     }
 
     private void startTimer() {
@@ -96,19 +95,17 @@ public class CronometroActivity extends AppCompatActivity {
             @Override
             public void onFinish() {
                 timerRunning = false;
-                btnStartPause.setIconResource(R.drawable.ic_play_arrow); // Change icon to play
+                btnStartPause.setIconResource(R.drawable.ic_play_arrow);
                 Toast.makeText(CronometroActivity.this, "Ciclo concluído!", Toast.LENGTH_SHORT).show();
 
                 String notificationMessage = "Seu ciclo de " + tvTimerTypeLabel.getText() + " terminou!";
                 scheduleTimerEndAlarm(notificationMessage);
-
-                // Transition to next state
                 transitionToNextTimerState();
             }
         }.start();
 
         timerRunning = true;
-        btnStartPause.setIconResource(R.drawable.ic_pause); // Change icon to pause
+        btnStartPause.setIconResource(R.drawable.ic_pause);
     }
 
     private void pauseTimer() {
@@ -116,11 +113,11 @@ public class CronometroActivity extends AppCompatActivity {
             countDownTimer.cancel();
         }
         timerRunning = false;
-        btnStartPause.setIconResource(R.drawable.ic_play_arrow); // Change icon to play
+        btnStartPause.setIconResource(R.drawable.ic_play_arrow);
     }
 
     private void resetTimer() {
-        pauseTimer(); // Stop any running timer
+        pauseTimer();
         switch (currentTimerState) {
             case FOCUS:
                 timeLeftInMillis = focusTimeMillis;
@@ -133,12 +130,12 @@ public class CronometroActivity extends AppCompatActivity {
                 break;
         }
         updateCountDownText();
-        updateUIForState(currentTimerState); // Reapply current state UI
+        updateUIForState(currentTimerState);
     }
 
     private void skipTimer() {
         if (countDownTimer != null) {
-            countDownTimer.cancel(); // Stop current timer
+            countDownTimer.cancel();
         }
         transitionToNextTimerState();
     }
@@ -147,7 +144,7 @@ public class CronometroActivity extends AppCompatActivity {
         switch (currentTimerState) {
             case FOCUS:
                 completedFocusCycles++;
-                if (completedFocusCycles % 4 == 0) { // Every 4 focus cycles, transition to long break
+                if (completedFocusCycles % 4 == 0) {
                     currentTimerState = TimerState.LONG_BREAK;
                     timeLeftInMillis = longBreakTimeMillis;
                 } else {
@@ -162,7 +159,7 @@ public class CronometroActivity extends AppCompatActivity {
                 break;
         }
         updateUIForState(currentTimerState);
-        startTimer(); // Automatically start the next timer
+        startTimer();
     }
 
     private void updateCountDownText() {
@@ -199,7 +196,7 @@ public class CronometroActivity extends AppCompatActivity {
                 labelText = "Long Break";
                 break;
             default:
-                backgroundColor = R.color.focus_background; // Fallback
+                backgroundColor = R.color.focus_background;
                 textColor = R.color.focus_text_color;
                 buttonBackgroundColor = R.color.focus_button_background;
                 labelText = "Focus";
@@ -220,17 +217,14 @@ public class CronometroActivity extends AppCompatActivity {
         if (!timerRunning) {
             btnStartPause.setIconResource(R.drawable.ic_play_arrow);
         }
-        updateCountDownText(); // Ensure numbers are updated for the new time
+        updateCountDownText();
     }
 
     private void showMoreOptions() {
-        // Implement a PopupMenu or DialogFragment for "Reset" or "Settings"
         Toast.makeText(this, "Mais opções...", Toast.LENGTH_SHORT).show();
-        // For now, let's make the ... button act as a Reset button.
         resetTimer();
     }
 
-    // AlarmManager and Notification methods (as provided in previous response)
     public void scheduleTimerEndAlarm(String notificationMessage) {
         AlarmManager alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
         Intent intent = new Intent(this, AlarmReceiver.class);
@@ -244,17 +238,6 @@ public class CronometroActivity extends AppCompatActivity {
         );
 
         long triggerTime = System.currentTimeMillis();
-
-//        if (alarmManager != null) {
-//            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-//                alarmManager.setExactAndAllowWhileIdle(AlarmManager.RTC_WAKEUP, triggerTime, pendingIntent);
-//            } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
-//                alarmManager.setExact(AlarmManager.RTC_WAKEUP, triggerTime, pendingIntent);
-//            } else {
-//                alarmManager.set(AlarmManager.RTC_WAKEUP, triggerTime, pendingIntent);
-//            }
-//            Log.d(TAG, "Alarme de conclusão agendado!");
-//        }
     }
 
     @Override

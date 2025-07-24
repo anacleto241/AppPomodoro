@@ -168,8 +168,7 @@ public class EstatisticasActivity extends AppCompatActivity {
     private void setupPieChartWithRealData(List<DisciplinaStat> estatisticas) {
         List<PieEntry> entries = new ArrayList<>();
         List<Integer> colors = new ArrayList<>();
-        
-        // Cores para o gráfico
+
         int[] chartColors = {
             Color.rgb(64, 89, 128), Color.rgb(149, 165, 124), Color.rgb(217, 184, 162),
             Color.rgb(191, 134, 134), Color.rgb(179, 48, 80), Color.rgb(193, 37, 82),
@@ -199,8 +198,7 @@ public class EstatisticasActivity extends AppCompatActivity {
     private void setupPieChart(List<Object> stats) {
         List<PieEntry> entries = new ArrayList<>();
         List<Integer> colors = new ArrayList<>();
-        
-        // Cores para o gráfico
+
         int[] chartColors = {
             Color.rgb(64, 89, 128), Color.rgb(149, 165, 124), Color.rgb(217, 184, 162),
             Color.rgb(191, 134, 134), Color.rgb(179, 48, 80), Color.rgb(193, 37, 82),
@@ -208,7 +206,6 @@ public class EstatisticasActivity extends AppCompatActivity {
         };
         
         for (int i = 0; i < stats.size() && i < 8; i++) {
-            // Temporariamente usando dados mock até implementar corretamente
             entries.add(new PieEntry(10 + i * 5, "Disciplina " + (i + 1)));
             colors.add(chartColors[i % chartColors.length]);
         }

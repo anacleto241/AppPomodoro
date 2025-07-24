@@ -9,7 +9,7 @@ public class Disciplina {
     private String descricao;
     private String cor;
     private String icone;
-    private String prioridade; // "Alta", "Média", "Baixa"
+    private String prioridade;
     private String usuarioId;
     
     public Disciplina() {}
@@ -22,8 +22,7 @@ public class Disciplina {
         this.prioridade = prioridade;
         this.usuarioId = usuarioId;
     }
-    
-    // Getters
+
     public String getId() { return id; }
     public String getNome() { return nome; }
     public String getDescricao() { return descricao; }
@@ -31,8 +30,7 @@ public class Disciplina {
     public String getIcone() { return icone; }
     public String getPrioridade() { return prioridade; }
     public String getUsuarioId() { return usuarioId; }
-    
-    // Setters
+
     public void setId(String id) { this.id = id; }
     public void setNome(String nome) { this.nome = nome; }
     public void setDescricao(String descricao) { this.descricao = descricao; }

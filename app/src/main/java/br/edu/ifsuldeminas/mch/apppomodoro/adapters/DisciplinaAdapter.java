@@ -70,14 +70,13 @@ public class DisciplinaAdapter extends RecyclerView.Adapter<DisciplinaAdapter.Di
             textViewNome.setText(disciplina.getNome());
             textViewPrioridade.setText(disciplina.getPrioridade());
             
-            // Definir cor
+
             try {
                 viewCor.setBackgroundColor(Color.parseColor(disciplina.getCor()));
             } catch (IllegalArgumentException e) {
                 viewCor.setBackgroundColor(Color.GRAY);
             }
-            
-            // Definir prioridade com cores
+
             switch (disciplina.getPrioridade()) {
                 case "Alta":
                     textViewPrioridade.setTextColor(Color.RED);
@@ -89,8 +88,7 @@ public class DisciplinaAdapter extends RecyclerView.Adapter<DisciplinaAdapter.Di
                     textViewPrioridade.setTextColor(Color.GREEN);
                     break;
             }
-            
-            // Cliques
+
             itemView.setOnClickListener(v -> {
                 if (listener != null) {
                     listener.onDisciplinaClick(disciplina);

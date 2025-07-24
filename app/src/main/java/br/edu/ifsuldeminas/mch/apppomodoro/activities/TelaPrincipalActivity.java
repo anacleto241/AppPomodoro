@@ -36,11 +36,9 @@ public class TelaPrincipalActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        
-        // Inicializar Local Auth
+
         localAuthManager = new LocalAuthManager(this);
-        
-        // Verificar autenticação (Firebase ou Local)
+
         boolean isAuthenticated = false;
         try {
             mAuth = FirebaseAuth.getInstance();
@@ -49,8 +47,7 @@ public class TelaPrincipalActivity extends AppCompatActivity {
         } catch (Exception e) {
             Log.w("TelaPrincipal", "Firebase não disponível, usando Local Auth");
         }
-        
-        // Se Firebase não funcionou, verificar Local Auth
+
         if (!isAuthenticated && !localAuthManager.isSignedIn()) {
             startActivity(new Intent(this, LoginActivity.class));
             finish();
@@ -65,8 +62,7 @@ public class TelaPrincipalActivity extends AppCompatActivity {
         setupListeners();
         setupWelcomeMessage();
         observeData();
-        
-        // Aplicar tema salvo
+
         sharedPreferences = getSharedPreferences("PomodoroPrefs", Context.MODE_PRIVATE);
         boolean temaEscuro = sharedPreferences.getBoolean("temaEscuro", false);
         AppCompatDelegate.setDefaultNightMode(
@@ -100,10 +96,8 @@ public class TelaPrincipalActivity extends AppCompatActivity {
     private void setupViewModel() {
         cicloViewModel = new ViewModelProvider(this).get(CicloViewModel.class);
         cicloViewModel.setApplication(getApplication());
-        
-        // Temporariamente removido Firebase Auth
-        // FirebaseUser currentUser = mAuth.getCurrentUser();
-        // Configurar usuário autenticado
+
+
         FirebaseUser currentUser = mAuth.getCurrentUser();
         if (currentUser != null) {
             cicloViewModel.setUsuarioId(currentUser.getUid());
@@ -148,7 +142,6 @@ public class TelaPrincipalActivity extends AppCompatActivity {
     }
     
     private void observeData() {
-        // Observar dados do ViewModel
         cicloViewModel.getTotalCiclos().observe(this, total -> {
             if (total != null) {
                 textViewCiclosConcluidos.setText("Total de ciclos: " + total);
@@ -190,7 +183,6 @@ public class TelaPrincipalActivity extends AppCompatActivity {
             return true;
             
         } else if (id == R.id.action_change_theme) {
-            // Alternar tema
             boolean temaAtual = sharedPreferences.getBoolean("temaEscuro", false);
             SharedPreferences.Editor editor = sharedPreferences.edit();
             editor.putBoolean("temaEscuro", !temaAtual);
@@ -215,6 +207,5 @@ public class TelaPrincipalActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        // Os dados são observados automaticamente pelo LiveData
     }
 }

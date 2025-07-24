@@ -19,7 +19,7 @@ public class CicloViewModel extends ViewModel {
     private Application application;
     
     public CicloViewModel() {
-        // Construtor padrão - o repository será inicializado quando setApplication for chamado
+
     }
     
     public void setApplication(Application application) {
@@ -64,24 +64,23 @@ public class CicloViewModel extends ViewModel {
         return new MutableLiveData<>(0);
     }
     
-    // Métodos compatíveis com a versão antiga para não quebrar o código existente
+
     public LiveData<Integer> getCiclosHoje() {
-        // Por enquanto, retorna o total de ciclos (pode ser implementado com filtro de data depois)
+
         return getTotalCiclos();
     }
     
     public LiveData<Integer> getCiclosSemana() {
-        // Por enquanto, retorna o total de ciclos (pode ser implementado com filtro de data depois)
+
         return getTotalCiclos();
     }
     
     public LiveData<Integer> getTempoTotalEstudo() {
-        // Retorna o total baseado na soma dos ciclos
+
         return getTotalCiclos();
     }
     
     public LiveData<List<Object>> getEstatisticasPorDisciplina() {
-        // Retorna uma lista vazia por enquanto - pode ser implementado depois
         return new MutableLiveData<>(new ArrayList<>());
     }
     
@@ -94,12 +93,10 @@ public class CicloViewModel extends ViewModel {
     }
     
     public void limparHistorico() {
-        // Método placeholder - implementação futura se necessário
     }
     
     @Override
     protected void onCleared() {
         super.onCleared();
-        // Cleanup if needed
     }
 }

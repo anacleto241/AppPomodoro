@@ -66,11 +66,11 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
         if (cursor.moveToFirst()) {
             do {
-                String dataString = cursor.getString(3); // "yyyy-MM-dd HH:mm:ss"
+                String dataString = cursor.getString(3);
                 long timestamp = 0;
                 try {
                     SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault());
-                    format.setTimeZone(TimeZone.getTimeZone("UTC")); // Corrige o fuso!
+                    format.setTimeZone(TimeZone.getTimeZone("UTC"));
                     Date date = format.parse(dataString);
                     timestamp = date != null ? date.getTime() : 0;
                 } catch (Exception e) {
@@ -78,11 +78,11 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 }
 
                 Ciclo ciclo = new Ciclo(
-                        cursor.getString(0),     // id
-                        null,                    // disciplinaId
-                        cursor.getString(1),     // descricao
-                        cursor.getInt(2),        // duracao
-                        timestamp                // dataHora em millis
+                        cursor.getString(0),
+                        null,
+                        cursor.getString(1),
+                        cursor.getInt(2),
+                        timestamp
                 );
                 ciclos.add(ciclo);
             } while (cursor.moveToNext());

@@ -130,14 +130,12 @@ public class CicloRepository {
                 .whereEqualTo("usuarioId", usuarioId)
                 .get()
                 .addOnSuccessListener(ciclosSnapshot -> {
-                    // Buscar todas as disciplinas
                     firestore.collection("disciplinas")
                             .whereEqualTo("usuarioId", usuarioId)
                             .get()
                             .addOnSuccessListener(disciplinasSnapshot -> {
                                 Map<String, DisciplinaStat> statsMap = new HashMap<>();
-                                
-                                // Inicializar estatísticas para cada disciplina
+
                                 for (QueryDocumentSnapshot disciplinaDoc : disciplinasSnapshot) {
                                     String disciplinaId = disciplinaDoc.getId();
                                     String nome = disciplinaDoc.getString("nome");
@@ -152,8 +150,7 @@ public class CicloRepository {
                                     
                                     statsMap.put(disciplinaId, stat);
                                 }
-                                
-                                // Calcular estatísticas com base nos ciclos
+
                                 for (QueryDocumentSnapshot cicloDoc : ciclosSnapshot) {
                                     String disciplinaId = cicloDoc.getString("disciplinaId");
                                     Long duracao = cicloDoc.getLong("duracao");
@@ -164,8 +161,7 @@ public class CicloRepository {
                                         stat.setTotalTempo(stat.getTotalTempo() + duracao);
                                     }
                                 }
-                                
-                                // Filtrar apenas disciplinas com pelo menos 1 ciclo
+
                                 List<DisciplinaStat> estatisticas = new ArrayList<>();
                                 for (DisciplinaStat stat : statsMap.values()) {
                                     if (stat.getTotalCiclos() > 0) {

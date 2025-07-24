@@ -43,8 +43,7 @@ public class EditarDisciplinaActivity extends AppCompatActivity {
         initViews();
         setupViewModel();
         setupListeners();
-        
-        // Verificar se é edição ou criação
+
         disciplinaId = getIntent().getStringExtra("disciplina_id");
         isEdicao = disciplinaId != null;
         
@@ -111,7 +110,6 @@ public class EditarDisciplinaActivity extends AppCompatActivity {
         btnSalvar.setEnabled(false);
         
         if (isEdicao) {
-            // Atualizar disciplina existente
             disciplinaViewModel.atualizarDisciplina(disciplinaId, nome, descricao, new DisciplinaRepository.OnCompleteListener() {
                 @Override
                 public void onSuccess() {
@@ -126,7 +124,6 @@ public class EditarDisciplinaActivity extends AppCompatActivity {
                 }
             });
         } else {
-            // Criar nova disciplina
             disciplinaViewModel.criarDisciplina(nome, descricao, new DisciplinaRepository.OnCompleteListener() {
                 @Override
                 public void onSuccess() {

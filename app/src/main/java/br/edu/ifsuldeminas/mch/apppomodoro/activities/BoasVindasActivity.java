@@ -30,20 +30,8 @@ public class BoasVindasActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_boas_vindas);
 
-        // Inicializar Firebase Analytics
         mFirebaseAnalytics = FirebaseAnalytics.getInstance(this);
 
-        // Temporariamente removido - autenticação Firebase
-        // mAuth = FirebaseAuth.getInstance();
-        
-        // Verificar se usuário está logado
-        // FirebaseUser currentUser = mAuth.getCurrentUser();
-        // if (currentUser == null) {
-        //     // Redirecionar para login se não estiver logado
-        //     startActivity(new Intent(this, LoginActivity.class));
-        //     finish();
-        //     return;
-        // }
 
         initViews();
         setupWelcomeMessage();
@@ -58,31 +46,21 @@ public class BoasVindasActivity extends AppCompatActivity {
     }
     
     private void setupWelcomeMessage() {
-        // Temporariamente sem Firebase Auth
-        // FirebaseUser user = mAuth.getCurrentUser();
-        // if (user != null && user.getDisplayName() != null) {
-        //     String nomeUsuario = user.getDisplayName();
-        //     textViewBoasVindas.setText("Bem-vindo(a), " + nomeUsuario + "!");
-        // } else {
             textViewBoasVindas.setText("Bem-vindo(a) ao Estude por Blocos!");
-        // }
     }
     
     private void setupListeners() {
         buttonComecar.setOnClickListener(v -> {
-            // Salvar preferência de tema
             boolean temaEscuro = radioGroupTema.getCheckedRadioButtonId() == R.id.radioTemaEscuro;
             
             SharedPreferences.Editor editor = sharedPreferences.edit();
             editor.putBoolean("temaEscuro", temaEscuro);
             editor.apply();
-            
-            // Aplicar tema
+
             AppCompatDelegate.setDefaultNightMode(
                 temaEscuro ? AppCompatDelegate.MODE_NIGHT_YES : AppCompatDelegate.MODE_NIGHT_NO
             );
-            
-            // Ir para tela principal
+
             startActivity(new Intent(this, TelaPrincipalActivity.class));
             finish();
         });

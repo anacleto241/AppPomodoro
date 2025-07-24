@@ -37,7 +37,6 @@ public class DisciplinaViewModel extends ViewModel {
     }
     
     public void atualizarDisciplina(String disciplinaId, String nome, String descricao, DisciplinaRepository.OnCompleteListener listener) {
-        // Buscar disciplina existente e atualizar
         repository.buscarDisciplinaPorId(disciplinaId, new DisciplinaRepository.OnDisciplinaListener() {
             @Override
             public void onSuccess(Disciplina disciplina) {

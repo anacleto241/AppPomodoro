@@ -10,9 +10,7 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLEncoder;
 
-/**
- * Serviço simples de tradução usando Google Translate API gratuita
- */
+
 public class TranslationService {
     private static final String TAG = "TranslationService";
     
@@ -42,7 +40,6 @@ public class TranslationService {
         @Override
         protected String doInBackground(Void... voids) {
             try {
-                // Usando uma API de tradução simplificada (MyMemory)
                 String encodedText = URLEncoder.encode(text, "UTF-8");
                 String urlStr = "https://api.mymemory.translated.net/get?q=" + encodedText + 
                                "&langpair=" + fromLang + "|" + toLang;
@@ -63,8 +60,7 @@ public class TranslationService {
                         response.append(line);
                     }
                     reader.close();
-                    
-                    // Parse JSON response (simplified)
+
                     String jsonResponse = response.toString();
                     if (jsonResponse.contains("\"translatedText\":\"")) {
                         int start = jsonResponse.indexOf("\"translatedText\":\"") + 18;
@@ -74,7 +70,7 @@ public class TranslationService {
                 }
                 
                 hasError = true;
-                return text; // Return original if translation fails
+                return text;
                 
             } catch (Exception e) {
                 Log.e(TAG, "Translation error: " + e.getMessage());

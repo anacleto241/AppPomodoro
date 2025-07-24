@@ -72,7 +72,6 @@ public class GerenciarDisciplinasActivity extends AppCompatActivity {
         adapter = new DisciplinaAdapter(new ArrayList<>(), new DisciplinaAdapter.DisciplinaClickListener() {
             @Override
             public void onDisciplinaClick(Disciplina disciplina) {
-                // Abrir tela de edição
                 Intent intent = new Intent(GerenciarDisciplinasActivity.this, EditarDisciplinaActivity.class);
                 intent.putExtra("disciplina_id", disciplina.getId());
                 intent.putExtra("disciplina_nome", disciplina.getNome());
@@ -84,7 +83,6 @@ public class GerenciarDisciplinasActivity extends AppCompatActivity {
             
             @Override
             public void onDisciplinaLongClick(Disciplina disciplina) {
-                // Excluir disciplina
                 viewModel.deletarDisciplina(disciplina.getId(), new DisciplinaRepository.OnCompleteListener() {
                     @Override
                     public void onSuccess() {

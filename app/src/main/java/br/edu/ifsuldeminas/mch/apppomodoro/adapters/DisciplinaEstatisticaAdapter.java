@@ -74,31 +74,24 @@ public class DisciplinaEstatisticaAdapter extends RecyclerView.Adapter<Disciplin
         }
         
         void bind(DisciplinaStat stat, long totalTempo) {
-            // Nome da disciplina
+
             textViewNomeDisciplina.setText(stat.getNome());
-            
-            // Tempo estudado formatado
+
             String tempoFormatado = formatarTempo(stat.getTotalTempo());
             textViewTempoEstudado.setText(tempoFormatado);
-            
-            // Detalhes com número de ciclos
+
             String detalhes = String.format("Ciclos: %d • %s de estudo", 
                     stat.getTotalCiclos(), 
                     tempoFormatado);
             textViewDetalhes.setText(detalhes);
-            
-            // Calcular e exibir percentual
+
             float percentual = totalTempo > 0 ? (float) stat.getTotalTempo() / totalTempo * 100 : 0;
             textViewPercentual.setText(String.format("%.1f%%", percentual));
-            
-            // Ajustar altura da barra de progresso baseada no percentual
+
             ViewGroup.LayoutParams params = viewBarraProgresso.getLayoutParams();
-            params.height = (int) (40 + (percentual / 100 * 60)); // Entre 40dp e 100dp
+            params.height = (int) (40 + (percentual / 100 * 60));
             viewBarraProgresso.setLayoutParams(params);
-            
-            // Definir cor da barra (opcional, pode usar a cor da disciplina)
-            // Se houver cor definida na disciplina, usar aqui
-            // viewBarraProgresso.setBackgroundColor(Color.parseColor(stat.getCor()));
+
         }
         
         private String formatarTempo(long minutos) {

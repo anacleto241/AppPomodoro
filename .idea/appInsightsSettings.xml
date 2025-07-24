@@ -9,10 +9,10 @@
             <InsightsFilterSettings>
               <option name="connection">
                 <ConnectionSetting>
-                  <option name="appId" value="br.edu.ifsuldeminas.mach.apppomodoro" />
-                  <option name="mobileSdkAppId" value="1:123456789:android:abcdefghijk" />
-                  <option name="projectId" value="apppomodoro-demo" />
-                  <option name="projectNumber" value="123456789" />
+                  <option name="appId" value="br.edu.ifsuldeminas.mch.apppomodoro" />
+                  <option name="mobileSdkAppId" value="1:41750544926:android:8f01890263265002c3640f" />
+                  <option name="projectId" value="aplicativopomodoro-dfa96" />
+                  <option name="projectNumber" value="41750544926" />
                 </ConnectionSetting>
               </option>
               <option name="signal" value="SIGNAL_UNSPECIFIED" />
